@@ -7,17 +7,18 @@
 |     21      | [合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists) | **1.** 别忘了考虑，提供的 `list_1` `list_2` 为空的情况。**2.** 使用**哨兵节点**简化代码编写 |
 |     23      | [合并K个升序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists) | 方法有三。`1.` 按顺序两两合并 `2.` 分治两两合并 `3.` **头**节点**优先队列**逐节点合并 |
 |     42      | [接雨水](https://leetcode-cn.com/problems/trapping-rain-water) | `1.`动态规划（代码不懂），`2.`单调栈（算法不懂，代码也不懂），`3.`双指针（代码不懂） |
-|     46      | [全排列](https://leetcode-cn.com/problems/permutations)      |                                                              |
+|     46      | [全排列](https://leetcode-cn.com/problems/permutations)      | 主要思想是**回溯**，可以用**递归**实现或**迭代**实现         |
+|     132     | [分割回文串 II](https://leetcode-cn.com/problems/palindrome-partitioning-ii) |                                                              |
+|     141     | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle) | `1.`暴力破解——【定时/定次】循环，`2.` `set`去重，`3.`双指针（快慢指针） |
+|     670     | [最大交换](https://leetcode-cn.com/problems/maximum-swap)    |                                                              |
 |     121     | [买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock) |                                                              |
 |     122     | [买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii) |                                                              |
 |     123     | [买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii) |                                                              |
-|     132     | [分割回文串 II](https://leetcode-cn.com/problems/palindrome-partitioning-ii) |                                                              |
-|     141     | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle) |                                                              |
 |     188     | [买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv) |                                                              |
 |     309     | [最佳买卖股票时机含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown) |                                                              |
-|     670     | [最大交换](https://leetcode-cn.com/problems/maximum-swap)    |                                                              |
 |     714     | [买卖股票的最佳时机含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee) |                                                              |
 |             |                                                              |                                                              |
+|             | **《左神》**`P279`                                           |                                                              |
 |             |                                                              |                                                              |
 |             |                                                              |                                                              |
 |             |                                                              |                                                              |
@@ -50,5 +51,3 @@
 |             |                                                              |                                                              |
 |             |                                                              |                                                              |
 |             |                                                              |                                                              |
-|             |                                                              |                                                              |
-
