@@ -7,10 +7,10 @@ import java.util.List;
 public class T5_longest_palindromic_substring {
 
   public static void main(String[] args) {
-    System.out.println(new me_dp().longestPalindrome("hello"));
+    System.out.println(new me_中心扩展法().longestPalindrome("hello"));
   }
 
-  static class me_dp {
+  static class me_动态规划 {
 
     /**
      * 时间复杂度 O(n^2)
@@ -65,6 +65,54 @@ public class T5_longest_palindromic_substring {
         }
       }
       return s.substring(begin, begin + maxLen);
+    }
+  }
+
+  static class me_中心扩展法 {
+
+    /* 最贴近我原生逻辑的写法 */
+
+    /**
+     * 时间复杂度 O(n^2) 其中 n 是字符串的长度。长度为 1 和 2 的回文中心分别有 n 和 n-1 个，每个回文中心最多会向外扩展 O(n) 次。
+     * 空间复杂度 O(1)
+     */
+    public String longestPalindrome(String s) {
+      /* 若 s.length() < 2, 则 return s */
+      if (s == null || s.length() < 2) {
+        return s;
+      }
+      int subLenMax = 1;
+      int left = 0;
+      for (int center = 0; center < s.length(); center++) {
+        int subLenByCenter = Math.max(
+          expandAroundCenter(s, center, center),
+          expandAroundCenter(s, center, center + 1)
+        );
+        if (subLenByCenter > subLenMax) {
+          subLenMax = subLenByCenter;
+          left = center - subLenByCenter / 2;
+        }
+      }
+      return s.substring(left, subLenMax);
+    }
+
+    /* 这个函数名字起的真合适，我就想不到 */
+    public int expandAroundCenter(String s, int left, int right) {
+      while (true) {
+        if (
+          s != null &&
+          left <= right &&
+          left >= 0 &&
+          right < s.length() &&
+          s.charAt(left) == s.charAt(right)
+        ) {
+          left--;
+          right++;
+        } else {
+          break;
+        }
+      }
+      return right - left + 1;
     }
   }
 
@@ -127,6 +175,8 @@ public class T5_longest_palindromic_substring {
   }
 
   static class Solution_中心扩展法 {
+
+    /* 最贴近我原生逻辑的写法 */
 
     /**
      * 时间复杂度 O(n^2) 其中 n 是字符串的长度。长度为 1 和 2 的回文中心分别有 n 和 n-1 个，每个回文中心最多会向外扩展 O(n) 次。
