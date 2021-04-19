@@ -7,7 +7,65 @@ import java.util.List;
 public class T5_longest_palindromic_substring {
 
   public static void main(String[] args) {
-    System.out.println(new Solution_Manacher().longestPalindrome("hello"));
+    System.out.println(new me_dp().longestPalindrome("hello"));
+  }
+
+  static class me_dp {
+
+    /**
+     * 时间复杂度 O(n^2)
+     * 空间复杂度 O(n^2)
+     */
+    public String longestPalindrome(String s) {
+      int strLength = s.length();
+      /* 若字符串长度小于2，则返回自身 */
+      if (strLength < 2) {
+        return s;
+      }
+      /* 否则，执行 DP 演算 */
+      int maxLen = 1;
+      int begin = 0;
+      /* dp[i][j] 表示 s[i..j] 是否是回文串 */
+      boolean[][] dp = new boolean[strLength][strLength];
+      /* 初始化：所有长度为 1 的子串都是回文串 */
+      for (int i = 0; i < strLength; i++) {
+        dp[i][i] = true;
+      }
+
+      char[] charArray = s.toCharArray();
+      /* 递推开始 */
+      /* 先枚举子串长度 */
+      for (int subLenLimit = 2; subLenLimit <= strLength; subLenLimit++) {
+        /* 枚举左边界，左边界的上限设置可以宽松一些 */
+        for (int left = 0; left < strLength; left++) {
+          /* 对于固定的子串长度、自增的左索引，可以计算得对应的右索引 */
+          int right = subLenLimit + left - 1;
+          /* 如果右索引越界了，则退出当前循环 */
+          if (right >= strLength) {
+            break;
+          }
+          /* 如果对于当前状态，不满足 s[left] == s[right]，则dp数组[left][right]标记为 false */
+          if (charArray[left] != charArray[right]) {
+            dp[left][right] = false;
+          } else {
+            if (right - left < 3) {
+              /* 在满足 s[left] == s[right] 时，若 s.subString().length() = 0～2 则，直接标记dp数组[left][right]=true */
+              dp[left][right] = true;
+            } else {
+              /* 在满足 s[left] == s[right] 时，若 s.subString().length() >=3 则 需要 dp[left][right] = true&&dp[left + 1][right - 1] */
+              dp[left][right] = dp[left + 1][right - 1];
+            }
+          }
+
+          /* 更新：最长回文子串的长度 和 左索引 */
+          if (dp[left][right] && right - left + 1 > maxLen) {
+            maxLen = right - left + 1;
+            begin = left;
+          }
+        }
+      }
+      return s.substring(begin, begin + maxLen);
+    }
   }
 
   static class Solution_动态规划 {
@@ -17,47 +75,50 @@ public class T5_longest_palindromic_substring {
      * 空间复杂度 O(n^2)
      */
     public String longestPalindrome(String s) {
-      int len = s.length();
-      if (len < 2) {
+      int strLength = s.length();
+      /* 若字符串长度小于2，则返回自身 */
+      if (strLength < 2) {
         return s;
       }
-
+      /* 否则，执行 DP 演算 */
       int maxLen = 1;
       int begin = 0;
-      // dp[i][j] 表示 s[i..j] 是否是回文串
-      boolean[][] dp = new boolean[len][len];
-      // 初始化：所有长度为 1 的子串都是回文串
-      for (int i = 0; i < len; i++) {
+      /* dp[i][j] 表示 s[i..j] 是否是回文串 */
+      boolean[][] dp = new boolean[strLength][strLength];
+      /* 初始化：所有长度为 1 的子串都是回文串 */
+      for (int i = 0; i < strLength; i++) {
         dp[i][i] = true;
       }
 
       char[] charArray = s.toCharArray();
-      // 递推开始
-      // 先枚举子串长度
-      for (int L = 2; L <= len; L++) {
-        // 枚举左边界，左边界的上限设置可以宽松一些
-        for (int i = 0; i < len; i++) {
-          // 由 L 和 i 可以确定右边界，即 j - i + 1 = L 得
-          int j = L + i - 1;
-          // 如果右边界越界，就可以退出当前循环
-          if (j >= len) {
+      /* 递推开始 */
+      /* 先枚举子串长度 */
+      for (int subLenLimit = 2; subLenLimit <= strLength; subLenLimit++) {
+        /* 枚举左边界，左边界的上限设置可以宽松一些 */
+        for (int left = 0; left < strLength; left++) {
+          /* 对于固定的子串长度、自增的左索引，可以计算得对应的右索引 */
+          int right = subLenLimit + left - 1;
+          /* 如果右索引越界了，则退出当前循环 */
+          if (right >= strLength) {
             break;
           }
-
-          if (charArray[i] != charArray[j]) {
-            dp[i][j] = false;
+          /* 如果对于当前状态，不满足 s[left] == s[right]，则dp数组[left][right]标记为 false */
+          if (charArray[left] != charArray[right]) {
+            dp[left][right] = false;
           } else {
-            if (j - i < 3) {
-              dp[i][j] = true;
+            if (right - left < 3) {
+              /* 在满足 s[left] == s[right] 时，若 s.subString().length() = 0～2 则，直接标记dp数组[left][right]=true */
+              dp[left][right] = true;
             } else {
-              dp[i][j] = dp[i + 1][j - 1];
+              /* 在满足 s[left] == s[right] 时，若 s.subString().length() >=3 则 需要 dp[left][right] = true&&dp[left + 1][right - 1] */
+              dp[left][right] = dp[left + 1][right - 1];
             }
           }
 
-          // 只要 dp[i][L] == true 成立，就表示子串 s[i..L] 是回文，此时记录回文长度和起始位置
-          if (dp[i][j] && j - i + 1 > maxLen) {
-            maxLen = j - i + 1;
-            begin = i;
+          /* 更新：最长回文子串的长度 和 左索引 */
+          if (dp[left][right] && right - left + 1 > maxLen) {
+            maxLen = right - left + 1;
+            begin = left;
           }
         }
       }

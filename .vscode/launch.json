@@ -6,11 +6,17 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T5_longest_palindromic_substring",
+      "request": "launch",
+      "mainClass": "zyy.T5_longest_palindromic_substring",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch Java",
       "request": "launch",
       "mainClass": "bytedance_11.Main",
       "args": "< input.txt"
     }
-    
   ]
 }
