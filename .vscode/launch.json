@@ -15,8 +15,8 @@
       "type": "java",
       "name": "Launch Java",
       "request": "launch",
-      "mainClass": "bytedance_11.Main",
-      "args": "< input.txt"
+      "mainClass": "zyy.T5_longest_palindromic_substring",
+      // "args": "< input.txt"
     }
   ]
 }

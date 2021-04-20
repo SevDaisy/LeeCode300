@@ -7,7 +7,7 @@ import java.util.List;
 public class T5_longest_palindromic_substring {
 
   public static void main(String[] args) {
-    System.out.println(new me_中心扩展法().longestPalindrome("hello"));
+    System.out.println(new me_中心扩展法().longestPalindrome("abaa"));
   }
 
   static class me_动态规划 {
@@ -81,7 +81,7 @@ public class T5_longest_palindromic_substring {
       if (s == null || s.length() < 2) {
         return s;
       }
-      int subLenMax = 1;
+      int subLenMax = 0;
       int left = 0;
       for (int center = 0; center < s.length(); center++) {
         int subLenByCenter = Math.max(
@@ -90,10 +90,10 @@ public class T5_longest_palindromic_substring {
         );
         if (subLenByCenter > subLenMax) {
           subLenMax = subLenByCenter;
-          left = center - subLenByCenter / 2;
+          left = center - (subLenByCenter - 1) / 2;/* 这句话我需要用数学归纳法才能得出，不知道直接推导该如何得出 */
         }
       }
-      return s.substring(left, subLenMax);
+      return s.substring(left, left + subLenMax);
     }
 
     /* 这个函数名字起的真合适，我就想不到 */
@@ -112,7 +112,8 @@ public class T5_longest_palindromic_substring {
           break;
         }
       }
-      return right - left + 1;
+      /* 实际上是 (right - left + 1) - 2, 即当前长度减去2 */
+      return right - left - 1;
     }
   }
 
