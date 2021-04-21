@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T4_median_of_two_sorted_arrays",
+      "request": "launch",
+      "mainClass": "Order300.T4_median_of_two_sorted_arrays",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch T3_longest_substring_without_repeating_characters",
       "request": "launch",
       "mainClass": "Order300.T3_longest_substring_without_repeating_characters",
