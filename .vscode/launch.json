@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T6_zigzag_conversion",
+      "request": "launch",
+      "mainClass": "Order300.T6_zigzag_conversion",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch T4_median_of_two_sorted_arrays",
       "request": "launch",
       "mainClass": "Order300.T4_median_of_two_sorted_arrays",
