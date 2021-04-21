@@ -16,6 +16,7 @@ public class T8_string_to_integer_atoi {
   static class Automaton {
 
     private static final Map<String, String[]> TABLE = new HashMap<>(5);
+    private static final int MAX_VALUE_tenth = Integer.MAX_VALUE / 10;
     boolean overflow = false; // 标记是否溢出
     int numSign = 1; // 标记正负
     int val = 0; // 存储值
@@ -51,13 +52,16 @@ public class T8_string_to_integer_atoi {
           break;
         case "num":
           if (!overflow) {
-            int old = this.val;
-            int cur = this.val * 10 + (c - '0');
-            if ((cur - (c - '0')) / 10 != old) {
+            if (val > MAX_VALUE_tenth) {
               overflow = true;
-            } else {
-              this.val = cur;
+            } else if (val == MAX_VALUE_tenth) {
+              if (numSign == 1 && (c - '0') > 7) {
+                overflow = true;
+              } else if (numSign == -1 && (c - '0') > 8) {
+                overflow = true;
+              }
             }
+            this.val = val * 10 + c - '0';
           }
           break;
         default:
