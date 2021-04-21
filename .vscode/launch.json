@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T3_longest_substring_without_repeating_characters",
+      "request": "launch",
+      "mainClass": "Order300.T3_longest_substring_without_repeating_characters",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch T5_longest_palindromic_substring",
       "request": "launch",
       "mainClass": "zyy.T5_longest_palindromic_substring",
@@ -15,8 +22,7 @@
       "type": "java",
       "name": "Launch Java",
       "request": "launch",
-      "mainClass": "zyy.T5_longest_palindromic_substring",
-      // "args": "< input.txt"
+      "mainClass": "zyy.T5_longest_palindromic_substring"
     }
   ]
 }
