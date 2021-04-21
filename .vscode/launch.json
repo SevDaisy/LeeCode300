@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T7_reverse_integer",
+      "request": "launch",
+      "mainClass": "Order300.T7_reverse_integer",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch T6_zigzag_conversion",
       "request": "launch",
       "mainClass": "Order300.T6_zigzag_conversion",
