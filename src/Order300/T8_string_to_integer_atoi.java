@@ -5,58 +5,87 @@ import java.util.Map;
 
 public class T8_string_to_integer_atoi {
 
-  static class Solution {
-
-    public int myAtoi(String str) {
-      Automaton automaton = new Automaton();
-      int length = str.length();
-      for (int i = 0; i < length; ++i) {
-        automaton.get(str.charAt(i));
-      }
-      return (int) (automaton.sign * automaton.getAns());
-    }
+  public static void main(String[] args) {
+    System.out.println(new Solution().myAtoi("2147483649"));
+    System.out.println(new Solution().myAtoi("99999999999999999"));
+    System.out.println(new Solution().myAtoi("-99999999999999999"));
+    System.out.println(new Solution().myAtoi("abdc"));
+    System.out.println(new Solution().myAtoi("123abdc"));
   }
 
   static class Automaton {
 
-    public int sign = 1;
-    public long ans = 0;
-    private String state = "start";
-    private Map<String, String[]> table = new HashMap<String, String[]>() {
-      {
-        put("start", new String[] { "start", "signed", "in_number", "end" });
-        put("signed", new String[] { "end", "end", "in_number", "end" });
-        put("in_number", new String[] { "end", "end", "in_number", "end" });
-        put("end", new String[] { "end", "end", "end", "end" });
-      }
-    };
+    private static final Map<String, String[]> TABLE = new HashMap<>(5);
+    boolean overflow = false; // 标记是否溢出
+    int numSign = 1; // 标记正负
+    int val = 0; // 存储值
+    String state = "start"; // 当前状态
 
-    public long getAns() {
-      return sign == 1
-        ? Math.min(ans, (long) Integer.MAX_VALUE)
-        : Math.min(ans, -(long) Integer.MIN_VALUE);
+    /* 初始化 状态映射矩阵 */
+    static {
+      TABLE.put("start", new String[] { "start", "sign", "num", "end" });
+      TABLE.put("sign", new String[] { "end", "end", "num", "end" });
+      TABLE.put("num", new String[] { "end", "end", "num", "end" });
+      TABLE.put("end", new String[] { "end", "end", "end", "end" });
     }
 
-    public void get(char c) {
-      state = table.get(state)[get_col(c)];
-      if ("in_number".equals(state)) {
-        ans = ans * 10 + c - '0';
-      } else if ("signed".equals(state)) {
-        sign = c == '+' ? 1 : -1;
-      }
-    }
-
-    private int get_col(char c) {
-      if (c == ' ') {
+    /* 从 Char 得出 Table 矩阵的 X 值 */
+    static int getTableX(char x) {
+      if (x == ' ') {
         return 0;
-      }
-      if (c == '+' || c == '-') {
+      } else if (x == '+' || x == '-') {
         return 1;
-      }
-      if (Character.isDigit(c)) {
+      } else if (Character.isDigit(x)) {
         return 2;
+      } else return 3;
+    }
+
+    /* 自动机走一步 */
+    void step(char c) {
+      /* 先做状态转移 */
+      this.state = TABLE.get(this.state)[getTableX(c)];
+      /* 再做值的运算 */
+      switch (state) {
+        case "sign":
+          this.numSign = (c == '-') ? -1 : 1;
+          break;
+        case "num":
+          if (!overflow) {
+            int old = this.val;
+            int cur = this.val * 10 + (c - '0');
+            if ((cur - (c - '0')) / 10 != old) {
+              overflow = true;
+            } else {
+              this.val = cur;
+            }
+          }
+          break;
+        default:
+          break;
       }
-      return 3;
+    }
+
+    void readLine(String s) {
+      for (int i = 0; i < s.length(); i++) {
+        this.step(s.charAt(i));
+      }
+    }
+
+    int getResult() {
+      if (overflow) {
+        return numSign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+      } else {
+        return numSign * val;
+      }
+    }
+  }
+
+  static class Solution {
+
+    public int myAtoi(String str) {
+      Automaton automaton = new Automaton();
+      automaton.readLine(str);
+      return automaton.getResult();
     }
   }
 }
