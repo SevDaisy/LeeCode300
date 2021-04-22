@@ -15,7 +15,8 @@ public class T10_regular_expression_matching {
     // bug case ↓↓↓
     // System.out.println(new Solution().isMatch("aab", "c*a*b"));
     // System.out.println(new Solution().isMatch("aaa", "a*a"));
-    System.out.println(new Solution().isMatch("a", "ab*"));
+    // System.out.println(new Solution().isMatch("a", "ab*"));
+    System.out.println(new Solution().isMatch("bbbba",".*a*a"));
   }
 
   static class Solution {
@@ -71,15 +72,17 @@ public class T10_regular_expression_matching {
           /* 如果 s,p 均已经遍历完毕，则返回 匹配成功 */
           return true;
         } else if (cur.si >= sMax) {
-          /* 如果 s 已经遍历完毕，则检查 p 中剩下的是不是 '*' 或者 '.' */
           /**
            * '.' 匹配任意单个字符
            * '*' 匹配零个或多个前面的那一个元素
+           * 因此，当剩下的是一个 "*" ".*" "a*b*c*" 这种的东西的时候，可以考虑下一步
            */
-          /* 因此，当且仅当剩下的是一个‘*’时，才算是匹配到了 */
-          if (
-            pMax == cur.pi + 1 && mode[cur.pi] == '*'
-          ) return true; else continue;
+          if ((mode[cur.pi] == '*')) {
+            stack.add(new AutoState(cur.si, cur.pi + 1));
+          } else if (pMax > cur.pi + 1 && mode[cur.pi + 1] == '*') {
+            stack.add(new AutoState(cur.si, cur.pi + 2));
+          }
+          continue;
         } else if (cur.pi >= pMax) {
           /* 如果 p 已经遍历完毕,则说明这个状态不行,继续检索下一个状态即可 */
           continue;
