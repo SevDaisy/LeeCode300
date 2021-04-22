@@ -7,22 +7,51 @@ import java.util.Stack;
 public class T10_regular_expression_matching {
 
   public static void main(String[] args) {
-    System.out.println(new Solution().isMatch("aa", "a"));
-    System.out.println(new Solution().isMatch("aa", "a*"));
-    System.out.println(new Solution().isMatch("ab", ".*"));
-    System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
+    System.out.println(new Solution_dp().isMatch("aa", "a"));
+    System.out.println(new Solution_dp().isMatch("aa", "a*"));
+    System.out.println(new Solution_dp().isMatch("ab", ".*"));
+    System.out.println(new Solution_dp().isMatch("mississippi", "mis*is*p*"));
 
     // bug case ↓↓↓
-    System.out.println(new Solution().isMatch("aab", "c*a*b"));
-    System.out.println(new Solution().isMatch("aaa", "a*a"));
-    System.out.println(new Solution().isMatch("a", "ab*"));
-    System.out.println(new Solution().isMatch("bbbba", ".*a*a"));
+    System.out.println(new Solution_dp().isMatch("aab", "c*a*b"));
+    System.out.println(new Solution_dp().isMatch("aaa", "a*a"));
+    System.out.println(new Solution_dp().isMatch("a", "ab*"));
+    System.out.println(new Solution_dp().isMatch("bbbba", ".*a*a"));
   }
 
-  static class Solution {
+  static class Solution_dp {
 
     public boolean isMatch(String s, String p) {
-      return true;
+      int sMax = s.length();
+      int pMax = p.length();
+
+      boolean[][] dp = new boolean[sMax + 1][pMax + 1];
+      dp[0][0] = true;
+      for (int si = 0; si <= sMax; ++si) {
+        for (int pi = 1; pi <= pMax; ++pi) {
+          if (p.charAt(pi - 1) == '*') {
+            dp[si][pi] = dp[si][pi - 2];
+            if (matches(s, p, si, pi - 1)) {
+              dp[si][pi] = dp[si][pi] || dp[si - 1][pi];
+            }
+          } else {
+            if (matches(s, p, si, pi)) {
+              dp[si][pi] = dp[si - 1][pi - 1];
+            }
+          }
+        }
+      }
+      return dp[sMax][pMax];
+    }
+
+    public boolean matches(String s, String p, int si, int pi) {
+      if (si == 0) {
+        return false;
+      }
+      if (p.charAt(pi - 1) == '.') {
+        return true;
+      }
+      return s.charAt(si - 1) == p.charAt(pi - 1);
     }
   }
 
