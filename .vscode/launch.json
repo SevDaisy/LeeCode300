@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T15_3sum",
+      "request": "launch",
+      "mainClass": "Order300.T15_3sum",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch T11_container_with_most_water",
       "request": "launch",
       "mainClass": "Order300.T11_container_with_most_water",
