@@ -7,11 +7,11 @@ import java.util.Stack;
 public class T10_regular_expression_matching {
 
   public static void main(String[] args) {
-    System.out.println(new Solution().isMatch("aa", "a"));
-    System.out.println(new Solution().isMatch("aa", "a*"));
-    System.out.println(new Solution().isMatch("ab", ".*"));
+    // System.out.println(new Solution().isMatch("aa", "a"));
+    // System.out.println(new Solution().isMatch("aa", "a*"));
+    // System.out.println(new Solution().isMatch("ab", ".*"));
     System.out.println(new Solution().isMatch("aab", "c*a*b"));
-    System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
+    // System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
   }
 
   static class Solution {
@@ -57,7 +57,7 @@ public class T10_regular_expression_matching {
       Set<AutoState> visited = new HashSet<>(128);
       int sMax = s.length();
       int pMax = p.length();
-      stack.push(new AutoState(/* si */-1, /* pi */0));
+      stack.push(new AutoState(/* si */0, /* pi */0));
       while (!stack.isEmpty()) {
         AutoState cur = stack.pop();
         visited.add(cur);
