@@ -10,9 +10,12 @@ public class T10_regular_expression_matching {
     // System.out.println(new Solution().isMatch("aa", "a"));
     // System.out.println(new Solution().isMatch("aa", "a*"));
     // System.out.println(new Solution().isMatch("ab", ".*"));
-    // System.out.println(new Solution().isMatch("aab", "c*a*b"));
-    System.out.println(new Solution().isMatch("aaa", "a*a"));
     // System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
+
+    // bug case ↓↓↓
+    // System.out.println(new Solution().isMatch("aab", "c*a*b"));
+    // System.out.println(new Solution().isMatch("aaa", "a*a"));
+    System.out.println(new Solution().isMatch("a", "ab*"));
   }
 
   static class Solution {
@@ -101,23 +104,21 @@ public class T10_regular_expression_matching {
                * 结论 s 中必有 “上一个” 字符
                */
               if (line[cur.si - 1] == line[cur.si]) {
-                /* 如果当前字符和上一个字符相同，则匹配成功。si前进一位，pi不变 */
-                stack.add(new AutoState(cur.si + 1, cur.pi));
-              } else {
-                /* 说明 ‘*’ 匹配失败。si不变，pi前进一位  */
-                stack.add(new AutoState(cur.si, cur.pi + 1));
+                /* 如果当前字符和上一个字符相同，则匹配成功。*/
+                stack.add(new AutoState(cur.si + 1, cur.pi)); // 用 '*' 匹配
               }
+              /* 无论匹配成功不成功，都可以选择不用这个 '*' 来匹配 */
+              stack.add(new AutoState(cur.si, cur.pi + 1)); // 不用 '*' 匹配
             }
             break;
           default:
             /* mode[pi] 是普通字符 */
             if (line[cur.si] == mode[cur.pi]) {
               stack.add(new AutoState(cur.si + 1, cur.pi + 1));
-            } else {
-              /* 如果mode的下一个'*'意为0个 也可以算作被匹配了 */
-              if (cur.pi + 1 < pMax && mode[cur.pi + 1] == '*') {
-                stack.add(new AutoState(cur.si + 1, cur.pi + 2));
-              }
+            }
+            /* 如果mode的下一个'*'意为0个 也可以算作被匹配了 */
+            if (cur.pi + 1 < pMax && mode[cur.pi + 1] == '*') {
+              stack.add(new AutoState(cur.si, cur.pi + 2));
             }
             break;
         }
