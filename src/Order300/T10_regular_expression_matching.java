@@ -7,16 +7,16 @@ import java.util.Stack;
 public class T10_regular_expression_matching {
 
   public static void main(String[] args) {
-    // System.out.println(new Solution().isMatch("aa", "a"));
-    // System.out.println(new Solution().isMatch("aa", "a*"));
-    // System.out.println(new Solution().isMatch("ab", ".*"));
-    // System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
+    System.out.println(new Solution().isMatch("aa", "a"));
+    System.out.println(new Solution().isMatch("aa", "a*"));
+    System.out.println(new Solution().isMatch("ab", ".*"));
+    System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
 
     // bug case ↓↓↓
-    // System.out.println(new Solution().isMatch("aab", "c*a*b"));
-    // System.out.println(new Solution().isMatch("aaa", "a*a"));
-    // System.out.println(new Solution().isMatch("a", "ab*"));
-    System.out.println(new Solution().isMatch("bbbba",".*a*a"));
+    System.out.println(new Solution().isMatch("aab", "c*a*b"));
+    System.out.println(new Solution().isMatch("aaa", "a*a"));
+    System.out.println(new Solution().isMatch("a", "ab*"));
+    System.out.println(new Solution().isMatch("bbbba", ".*a*a"));
   }
 
   static class Solution {
@@ -92,6 +92,9 @@ public class T10_regular_expression_matching {
         switch (mode[cur.pi]) {
           case '.':
             stack.add(new AutoState(cur.si + 1, cur.pi + 1));
+            if (pMax > cur.pi + 1 && mode[cur.pi + 1] == '*') {
+              stack.add(new AutoState(cur.si, cur.pi + 2));
+            }
             break;
           case '*':
             /* 题目明文 “保证每次出现字符 * 时，前面都匹配到有效的字符” */
@@ -110,9 +113,9 @@ public class T10_regular_expression_matching {
                 /* 如果当前字符和上一个字符相同，则匹配成功。*/
                 stack.add(new AutoState(cur.si + 1, cur.pi)); // 用 '*' 匹配
               }
-              /* 无论匹配成功不成功，都可以选择不用这个 '*' 来匹配 */
-              stack.add(new AutoState(cur.si, cur.pi + 1)); // 不用 '*' 匹配
             }
+            /* 无论匹配成功不成功，只要当前是 '*',就可以选择不用这个 '*' 来匹配 */
+            stack.add(new AutoState(cur.si, cur.pi + 1)); // 不用 '*' 匹配
             break;
           default:
             /* mode[pi] 是普通字符 */
