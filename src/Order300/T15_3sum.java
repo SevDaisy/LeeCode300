@@ -8,8 +8,8 @@ public class T15_3sum {
 
   public static void main(String[] args) {
     for (List<Integer> tuple : new Solution().threeSum(new int[] { 1, 1, 1 })) {
-    // for (List<Integer> tuple : new Solution().threeSum(new int[] { -1, 0, 1, 2, -1, -4 })) {
-    // for (List<Integer> tuple : new Solution().threeSum(new int[] { -2, 0, 1, 1, 2 })) {
+      // for (List<Integer> tuple : new Solution().threeSum(new int[] { -1, 0, 1, 2, -1, -4 })) {
+      // for (List<Integer> tuple : new Solution().threeSum(new int[] { -2, 0, 1, 1, 2 })) {
       for (int nums : tuple) {
         System.out.printf("%d\t", nums);
       }
@@ -41,10 +41,7 @@ public class T15_3sum {
             continue;
           }
           while (bi < ci && nums[bi] + nums[ci] > target) {
-            /* c 跳过重复对象 */
-            do {
-              ci--;
-            } while (bi < ci && nums[ci] == nums[ci + 1]);
+            ci--;
           }
           /**
            * 如果 bi == ci
