@@ -10,7 +10,8 @@ public class T10_regular_expression_matching {
     // System.out.println(new Solution().isMatch("aa", "a"));
     // System.out.println(new Solution().isMatch("aa", "a*"));
     // System.out.println(new Solution().isMatch("ab", ".*"));
-    System.out.println(new Solution().isMatch("aab", "c*a*b"));
+    // System.out.println(new Solution().isMatch("aab", "c*a*b"));
+    System.out.println(new Solution().isMatch("aaa", "a*a"));
     // System.out.println(new Solution().isMatch("mississippi", "mis*is*p*"));
   }
 
@@ -112,6 +113,11 @@ public class T10_regular_expression_matching {
             /* mode[pi] 是普通字符 */
             if (line[cur.si] == mode[cur.pi]) {
               stack.add(new AutoState(cur.si + 1, cur.pi + 1));
+            } else {
+              /* 如果mode的下一个'*'意为0个 也可以算作被匹配了 */
+              if (cur.pi + 1 < pMax && mode[cur.pi + 1] == '*') {
+                stack.add(new AutoState(cur.si + 1, cur.pi + 2));
+              }
             }
             break;
         }
