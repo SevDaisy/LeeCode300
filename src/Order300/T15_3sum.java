@@ -35,7 +35,6 @@ public class T15_3sum {
         // int bi = ai + 1;
         int target = -nums[ai];/* b+c = -a */
         for (int bi = ai + 1; bi < ci; bi++) {
-          ci = iMax - 1;
           /* b 跳过重复对象 */
           if (bi > ai + 1 && nums[bi - 1] == nums[bi]) {
             continue;
