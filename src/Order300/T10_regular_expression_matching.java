@@ -21,6 +21,16 @@ public class T10_regular_expression_matching {
 
   static class Solution {
 
+    public boolean isMatch(String s, String p) {
+      return true;
+    }
+  }
+
+  /**
+   * 自动机原理，双指针+DFS+回溯
+   */
+  static class Solution_me {
+
     static class AutoState {
 
       int si;
@@ -52,9 +62,6 @@ public class T10_regular_expression_matching {
       }
     }
 
-    /**
-     * 自动机原理，双指针+DFS+回溯
-     */
     public boolean isMatch(String s, String p) {
       char[] line = s.toCharArray();
       char[] mode = p.toCharArray();
