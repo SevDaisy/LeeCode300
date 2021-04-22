@@ -65,8 +65,11 @@ public class T10_regular_expression_matching {
       stack.push(new AutoState(/* si */0, /* pi */0));
       while (!stack.isEmpty()) {
         AutoState cur = stack.pop();
-        visited.add(cur);
-
+        if (visited.contains(cur)) {
+          continue;
+        } else {
+          visited.add(cur);
+        }
         /* 看看当前状态需不需要下一步的判断 */
         if (cur.si >= sMax && cur.pi >= pMax) {
           /* 如果 s,p 均已经遍历完毕，则返回 匹配成功 */
