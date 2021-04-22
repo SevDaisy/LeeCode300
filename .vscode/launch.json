@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch T10_regular_expression_matching",
+      "request": "launch",
+      "mainClass": "Order300.T10_regular_expression_matching",
+      "projectName": "JavaRun"
+    },
+    {
+      "type": "java",
       "name": "Launch T9_palindrome_number",
       "request": "launch",
       "mainClass": "Order300.T9_palindrome_number",
