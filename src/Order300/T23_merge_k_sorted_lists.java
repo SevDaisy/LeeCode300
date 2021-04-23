@@ -19,7 +19,16 @@ public class T23_merge_k_sorted_lists {
     System.out.println(new Solution().mergeKLists(new ListNode[] {}));
   }
 
+  /* 分治归并 1ms 100% */
   static class Solution {
+
+    public char[] mergeKLists(ListNode[] lists) {
+      return null;
+    }
+  }
+
+  /* 优先队列 5ms 66.20% */
+  static class Solution_优先队列 {
 
     public ListNode mergeKLists(ListNode[] lists) {
       PriorityQueue<ListNode> set = new PriorityQueue<>(
