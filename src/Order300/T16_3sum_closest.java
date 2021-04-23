@@ -25,34 +25,34 @@ public class T16_3sum_closest {
     public int threeSumClosest(int[] nums, int target) {
       Arrays.sort(nums);
       int iMax = nums.length;
-      int distance = Integer.MAX_VALUE;
       int sum_3 = 0;
       for (int ai = 0; ai < iMax; ai++) {
         if (ai > 0 && nums[ai - 1] == nums[ai]) {
           continue;
         }
+        int bi = ai + 1;
         int ci = iMax - 1;
-        int goal = target - nums[ai];
-        for (int bi = ai + 1; bi < ci; bi++) {
-          if (bi > ai + 1 && nums[bi - 1] == nums[bi]) {
-            continue;
+        /* bi,ci 双指针 左右指针相向而行 */
+        while (bi < ci) {
+          int cur = nums[ai] + nums[bi] + nums[ci];
+          /* 如果当前状态是最优解 直接返回 */
+          if (cur == target) {
+            return cur;
           }
-          while (bi < ci && nums[bi] + nums[ci] > goal) {
-            ci--;
+          /* 如果当前状态值过大，则 ci左移 —— 可以跳过重复项 */
+          /* 否则当前状态值过小，则 bi右移 —— 可以跳过重复项 */
+          if (cur > target) {
+            while (bi < ci && ci < iMax - 1 && nums[ci + 1] == nums[ci]) {
+              ci--;
+            }
+          } else {
+            while (bi > ai + 1 && nums[bi - 1] == nums[bi]) {
+              bi++;
+            }
           }
-          if (bi == ci) {
-            break;
-          }
-          if (distance > abs(nums[bi] + nums[ci] - goal)) {
-            distance = abs(nums[bi] + nums[ci] - goal);
-            sum_3 = nums[ai] + nums[bi] + nums[ci];
-          }
-          if (ci + 1 < iMax && distance > abs(nums[bi] + nums[ci + 1] - goal)) {
-            distance = abs(nums[bi] + nums[ci + 1] - goal);
-            sum_3 = nums[ai] + nums[bi] + nums[ci + 1];
-          }
-          if (distance == 0) {
-            return sum_3;
+          /* 调整好 bi、ci 后，更新 sum_3  */
+          if (abs(cur - target) < abs(sum_3 - target)) {
+            sum_3 = cur;
           }
         }
       }
