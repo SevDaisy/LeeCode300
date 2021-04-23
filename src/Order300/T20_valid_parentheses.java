@@ -31,6 +31,9 @@ public class T20_valid_parentheses {
 
     public boolean isValid(String s) {
       int iMax = s.length();
+      if ((s.length() & 1) != 0) {
+        return false;
+      }
       Stack<Character> stack = new Stack<>();
       for (int i = 0; i < iMax; i++) {
         if (left(s.charAt(i))) {
