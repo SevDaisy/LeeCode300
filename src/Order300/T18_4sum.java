@@ -25,11 +25,19 @@ public class T18_4sum {
       List<List<Integer>> answers = new ArrayList<List<Integer>>();
       Arrays.sort(nums);
       int iMax = nums.length;
-      for (int ai = 0; ai < iMax; ai++) {
+      for (int ai = 0; ai < iMax - 3; ai++) {
         if (ai > 0 && nums[ai - 1] == nums[ai]) {
           continue;
         }
-        for (int bi = ai + 1; bi < iMax; bi++) {
+        /* 若 ai，最小的解 ai,ai+1,ai+2,ai+3 已经大于 target 则 ai 已经太大了，没救了 break ai-for */
+        if (
+          nums[ai] + nums[ai + 1] + nums[ai + 2] + nums[ai + 3] > target
+        ) break;
+        if (
+          nums[ai] + nums[iMax - 3] + nums[iMax - 2] + nums[iMax - 1] < target
+        ) continue;
+        /* 若 ai，最大的解 ai,iMax-3,iMax-2,iMax-1 已经大于 target 则 ai 还太小，还得再大一点 continue ai-for */
+        for (int bi = ai + 1; bi < iMax - 2; bi++) {
           if (bi > ai + 1 && nums[bi - 1] == nums[bi]) {
             continue;
           }
