@@ -31,6 +31,7 @@ public class T20_valid_parentheses {
 
     public boolean isValid(String s) {
       int iMax = s.length();
+      /* 判断奇偶 这样写也可以 */
       if ((s.length() & 1) != 0) {
         return false;
       }
