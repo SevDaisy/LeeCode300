@@ -6,8 +6,9 @@ public class T16_3sum_closest {
 
   public static void main(String[] args) {
     System.out.println(
-      new Solution().threeSumClosest(new int[] { -1, 2, 1, -4 }, 1)
-      // new Solution().threeSumClosest(new int[] { 0, 0, 0 }, 1)
+      // new Solution().threeSumClosest(new int[] { -1, 2, 1, -4 }, 1) // -> 2
+      // new Solution().threeSumClosest(new int[] { 0, 0, 0 }, 1) // -> 0
+      new Solution().threeSumClosest(new int[] { 0, 1, 2 }, 0) // -> 3
     );
   }
 
@@ -32,22 +33,22 @@ public class T16_3sum_closest {
           if (bi > ai + 1 && nums[bi - 1] == nums[bi]) {
             continue;
           }
-          while (bi < ci && nums[bi] + nums[ci] > goal) {
+          while (bi < ci && nums[bi] + nums[ci - 1] > goal) {
             ci--;
           }
           if (bi == ci) {
             break;
           }
-          if (nums[bi] + nums[ci] == goal) {
-            return nums[ai] + nums[bi] + nums[ci];
-          }
           if (distance > abs(nums[bi] + nums[ci] - goal)) {
             distance = abs(nums[bi] + nums[ci] - goal);
             sum_3 = nums[ai] + nums[bi] + nums[ci];
           }
-          if (ci + 1 < iMax && distance > abs(nums[bi] + nums[ci + 1] - goal)) {
-            distance = abs(nums[bi] + nums[ci + 1] - goal);
-            sum_3 = nums[ai] + nums[bi] + nums[ci + 1];
+          if (bi != ci - 1 && distance > abs(nums[bi] + nums[ci - 1] - goal)) {
+            distance = abs(nums[bi] + nums[ci - 1] - goal);
+            sum_3 = nums[ai] + nums[bi] + nums[ci - 1];
+          }
+          if (distance == 0) {
+            return sum_3;
           }
         }
       }
