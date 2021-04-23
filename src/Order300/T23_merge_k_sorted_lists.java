@@ -3,7 +3,7 @@ package Order300;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import Order300.T2_add_two_numbers.ListNode;
+import BaseNode.ListNode;
 
 public class T23_merge_k_sorted_lists {
 

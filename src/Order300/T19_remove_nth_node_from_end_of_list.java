@@ -1,6 +1,6 @@
 package Order300;
 
-import Order300.T2_add_two_numbers.ListNode;
+import BaseNode.ListNode;
 
 public class T19_remove_nth_node_from_end_of_list {
 

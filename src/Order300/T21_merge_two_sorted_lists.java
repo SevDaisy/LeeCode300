@@ -1,6 +1,6 @@
 package Order300;
 
-import Order300.T2_add_two_numbers.ListNode;
+import BaseNode.ListNode;
 
 public class T21_merge_two_sorted_lists {
 
