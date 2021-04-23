@@ -56,7 +56,9 @@ public class T198_house_robber {
       dp[2] = Math.max(dp[1], nums[2]);
       for (int i = 3; i < iMax; i++) {
         /* dp递推式 */
-        dp[i] = Math.max(dp[i - 3] + nums[i], Math.max(dp[i - 1], dp[i - 2]));
+        // dp[i] = Math.max(dp[i - 3] + nums[i], Math.max(dp[i - 1], dp[i - 2]));
+        // 注意 max(dp[i-1],dp[i-2])==dp[i-1] 恒成立
+        dp[i] = Math.max(dp[i - 3] + nums[i], dp[i - 1]);
       }
       return dp[iMax - 1];
     }
