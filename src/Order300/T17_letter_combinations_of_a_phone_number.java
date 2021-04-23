@@ -38,19 +38,22 @@ public class T17_letter_combinations_of_a_phone_number {
     }
 
     public void backtrack(
-      List<String> walkedList,
-      Map<Character, String> map,
-      String goal,
-      int pos,
-      StringBuilder path
+      List<String> walkedList, // 所有走完的路径，保存在此
+      Map<Character, String> map, // 每个节点的下一条路可以怎么选
+      String goal,// 总共要走完的 深度/目标
+      int pos, // 当前是 第几步/第几层
+      StringBuilder path // 从起点至今的节点路径
     ) {
       if (pos == goal.length()) {
+        /* 若已经走完了，则保存结果 */
         walkedList.add(path.toString());
       } else {
+        /* 看看下一步能怎么走 */
         char cur = goal.charAt(pos);
         String subPaths = map.get(cur);
         int subPathCnt = subPaths.length();
         for (int i = 0; i < subPathCnt; i++) {
+          /* 对于每一种子路线 尝试访问之 */
           path.append(subPaths.charAt(i));
           backtrack(walkedList, map, goal, pos + 1, path);
           path.deleteCharAt(pos);
