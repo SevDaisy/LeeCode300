@@ -38,37 +38,31 @@ public class T18_4sum {
           while (ci < di) {
             int cur = nums[ai] + nums[bi] + nums[ci] + nums[di];
             if (cur == target) {
-              ArrayList<Integer> ans = new ArrayList<>(4);
-              ans.add(nums[ai]);
-              ans.add(nums[bi]);
-              ans.add(nums[ci]);
-              ans.add(nums[di]);
-              answers.add(ans);
+              // ArrayList<Integer> ans = new ArrayList<>(4);
+              // ans.add(nums[ai]);
+              // ans.add(nums[bi]);
+              // ans.add(nums[ci]);
+              // ans.add(nums[di]);
+              // answers.add(ans);
+              /* 答案不用修改，所以可以用 Arrays.asList() */
+              answers.add(
+                Arrays.asList(nums[ai], nums[bi], nums[ci], nums[di])
+              );
               /* 可能在这个 while 内还有 ci,di 的其他可行解，因此answers.add()后，不能break也不能continue，而应该是重排 ci,di */
-              int tmp_ci = ci + 1;
-              while (tmp_ci < di && nums[ci] == nums[tmp_ci]) {
-                tmp_ci++;
+              while (ci < di && nums[ci] == nums[ci + 1]) {
+                ci++;
               }
-              ci = tmp_ci;
-              int tmp_di = di - 1;
-              while (tmp_di > ci && nums[di] == nums[tmp_di]) {
-                tmp_di--;
+              ci++;
+              while (ci < di && nums[di] == nums[di - 1]) {
+                di--;
               }
-              di = tmp_di;
+              di--;
+            } else if (cur < target) {
+              /* 省去跳跃重复是速度优化 */
+              ci++;
             } else {
-              if (cur < target) {
-                int tmp_ci = ci + 1;
-                while (tmp_ci < di && nums[ci] == nums[tmp_ci]) {
-                  tmp_ci++;
-                }
-                ci = tmp_ci;
-              } else {
-                int tmp_di = di - 1;
-                while (tmp_di > ci && nums[di] == nums[tmp_di]) {
-                  tmp_di--;
-                }
-                di = tmp_di;
-              }
+              /* 省去跳跃重复是速度优化 */
+              di--;
             }
           }
         }
