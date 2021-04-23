@@ -1,5 +1,8 @@
 package Order300;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class T2_add_two_numbers {
 
   static class ListNode {
@@ -16,6 +19,21 @@ public class T2_add_two_numbers {
     ListNode(int val, ListNode next) {
       this.val = val;
       this.next = next;
+    }
+
+    List<Integer> toList() {
+      List<Integer> out = new ArrayList<Integer>();
+      ListNode cur = this;
+      do {
+        out.add(cur.val);
+        cur = cur.next;
+      } while (cur != null);
+      return out;
+    }
+
+    ListNode add(int val) {
+      this.next = new ListNode(val);
+      return this.next;
     }
   }
 
