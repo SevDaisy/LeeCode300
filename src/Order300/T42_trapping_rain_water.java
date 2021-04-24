@@ -20,34 +20,34 @@ public class T42_trapping_rain_water {
       int leftMax[] = new int[iMax];
       int rightMax[] = new int[iMax];
 
-      // leftMax range(0, iMax, 1)
+      /* leftMax range(0, iMax, 1) */
       leftMax[0] = height[0];
       for (int i = 1; i < iMax; i++) {
         leftMax[i] = Math.max(height[i], leftMax[i - 1]);
       }
 
-      // rightMax range(iMax-2, -1, -1)
+      /* rightMax range(iMax-2, -1, -1) */
       rightMax[iMax - 1] = height[iMax - 1];
       for (int i = iMax - 2; i > -1; i--) {
         rightMax[i] = Math.max(height[i], rightMax[i + 1]);
       }
       // for (int i : leftMax) {
-        // System.out.print(i);
-        // System.out.print(" ");
+      // System.out.print(i);
+      // System.out.print(" ");
       // }
       // System.out.println();
       // for (int i : height) {
-        // System.out.print(i);
-        // System.out.print(" ");
+      // System.out.print(i);
+      // System.out.print(" ");
       // }
       // System.out.println();
       // for (int i : rightMax) {
-        // System.out.print(i);
-        // System.out.print(" ");
+      // System.out.print(i);
+      // System.out.print(" ");
       // }
       // System.out.println();
 
-      // val range(1, iMax-1, 1)
+      /* val range(1, iMax-1, 1) */
       int sum = 0;
       int single = 0;
       // System.out.print("  ");
