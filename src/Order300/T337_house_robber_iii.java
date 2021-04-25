@@ -4,6 +4,37 @@ import BaseNode.TreeNode;
 
 public class T337_house_robber_iii {
 
+  public static void main(String[] args) {
+    TreeNode root = new TreeNode();
+    root
+      .setVal(4)
+      .setLeft(TreeNode.from(1).setLeft(TreeNode.from(2)))
+      .setRight(TreeNode.from(0).setLeft(TreeNode.from(3)));
+    // -> 9
+    System.out.println(new Solution().rob(root));
+    System.out.println(new Solution_other().rob(root));
+
+    root =
+      TreeNode
+        .from(3)
+        .setLeft(TreeNode.from(2).setRight(TreeNode.from(3)))
+        .setRight(TreeNode.from(3).setRight(TreeNode.from(1)));
+    // -> 7
+    System.out.println(new Solution().rob(root));
+    System.out.println(new Solution_other().rob(root));
+
+    root =
+      TreeNode
+        .from(3)
+        .setLeft(
+          TreeNode.from(4).setLeft(TreeNode.from(1)).setRight(TreeNode.from(3))
+        )
+        .setRight(TreeNode.from(5).setRight(TreeNode.from(1)));
+    // -> 9
+    System.out.println(new Solution().rob(root));
+    System.out.println(new Solution_other().rob(root));
+  }
+
   static class Solution {
 
     public int rob(TreeNode root) {
@@ -31,6 +62,27 @@ public class T337_house_robber_iii {
           (root.right == null ? 0 : robSubTree(root.right, !isRootSelected))
         );
       }
+    }
+  }
+
+  static class Solution_other {
+
+    public int rob(TreeNode root) {
+      int[] result = robInternal(root);
+      return Math.max(result[0], result[1]);
+    }
+
+    public int[] robInternal(TreeNode root) {
+      if (root == null) return new int[2];
+      int[] result = new int[2];
+
+      int[] left = robInternal(root.left);
+      int[] right = robInternal(root.right);
+
+      result[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+      result[1] = left[0] + right[0] + root.val;
+
+      return result;
     }
   }
 }
