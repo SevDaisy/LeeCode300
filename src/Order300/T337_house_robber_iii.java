@@ -1,5 +1,7 @@
 package Order300;
 
+import java.util.HashMap;
+
 import BaseNode.TreeNode;
 
 public class T337_house_robber_iii {
@@ -107,12 +109,12 @@ public class T337_house_robber_iii {
   static class Solution_me_最优子结构递归 {
 
     /** 安全的取值函数 —— 无惧输入为 null */
-    int val(TreeNode node) {
+    private int val(TreeNode node) {
       return (node == null) ? 0 : node.val;
     }
 
     /** 安全的取值函数 —— 无惧输入为 null */
-    TreeNode getSon(TreeNode node, String who) {
+    private TreeNode getSon(TreeNode node, String who) {
       return (node == null)
         ? null
         : ("left".equals(who) ? node.left : node.right);
@@ -133,6 +135,54 @@ public class T337_house_robber_iii {
       /* 可能性二 去 两个儿子的小区 */
       int get_2 = rob(getSon(root, "left")) + rob(getSon(root, "right"));
       return Math.max(get_5, get_2);
+    }
+  }
+
+  /** 
+   * 问题结构是数，所以dp不方便用数组，就用 HashMap 存储 node:TreeNode 和 rob(node) 的对应关系。
+   * 效率：3ms => 54.44% */
+  static class Solution {
+
+    /** 安全的取值函数 —— 无惧输入为 null */
+    private int val(TreeNode node) {
+      return (node == null) ? 0 : node.val;
+    }
+
+    /** 安全的取值函数 —— 无惧输入为 null */
+    private TreeNode getSon(TreeNode node, String who) {
+      return (node == null)
+        ? null
+        : ("left".equals(who) ? node.left : node.right);
+    }
+
+    public int rob(TreeNode root) {
+      return memorizedRob(root, new HashMap<TreeNode, Integer>());
+    }
+
+    private int memorizedRob(
+      TreeNode root,
+      HashMap<TreeNode, Integer> dpTable
+    ) {
+      /* 鲁棒性 特殊条件 输入过少 */
+      if (root == null) {
+        return 0;
+      }
+      if (dpTable.containsKey(root)) {
+        return dpTable.get(root);
+      }
+      /* 可能性一 去 爷爷家 和 四个孙子的小区 */
+      int lr = memorizedRob(getSon(getSon(root, "left"), "right"), dpTable);
+      int ll = memorizedRob(getSon(getSon(root, "left"), "left"), dpTable);
+      int rl = memorizedRob(getSon(getSon(root, "right"), "left"), dpTable);
+      int rr = memorizedRob(getSon(getSon(root, "right"), "right"), dpTable);
+      int get_5 = val(root) + lr + ll + rl + rr;
+      /* 可能性二 去 两个儿子的小区 */
+      int get_2 =
+        memorizedRob(getSon(root, "left"), dpTable) +
+        memorizedRob(getSon(root, "right"), dpTable);
+      int robRoot = Math.max(get_5, get_2);
+      dpTable.put(root, robRoot);
+      return robRoot;
     }
   }
 }
