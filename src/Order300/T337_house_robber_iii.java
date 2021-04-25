@@ -75,19 +75,48 @@ public class T337_house_robber_iii {
       if (isRootSelected) {
         return (
           root.val +
-          (root.left == null ? 0 : robSubTree(root.left, !isRootSelected)) +
-          (root.right == null ? 0 : robSubTree(root.right, !isRootSelected))
+          (
+            root.left == null
+              ? 0
+              : robSubTree(root.left, /* 可用常量 false 代替 */!isRootSelected)
+          ) +
+          (
+            root.right == null
+              ? 0
+              : robSubTree(root.right, /* 可用常量 false 代替 */!isRootSelected)
+          )
         );
       } else {
+        /* bug here */
         return (
           (root.left == null ? 0 : robSubTree(root.left, !isRootSelected)) +
           (root.right == null ? 0 : robSubTree(root.right, !isRootSelected))
         );
+        /* it should be 
+        return (
+          (
+            (root.left == null)
+              ? 0
+              : Math.max(
+                robSubTree(root.left, true),
+                robSubTree(root.left, false)
+              )
+          ) +
+          (
+            (root.right == null)
+              ? 0
+              : Math.max(
+                robSubTree(root.right, true),
+                robSubTree(root.right, false)
+              )
+          )
+          );
+        */
       }
     }
   }
 
-  /** 通过优化为 最优子结构 来优化动态规划路径。
+  /**
    * 最优子结构 是 7个节点 的 一颗爷孙二叉树
    * result = max(
    *  val(root) +
