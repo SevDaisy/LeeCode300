@@ -11,8 +11,10 @@ public class T337_house_robber_iii {
       .setLeft(TreeNode.from(1).setLeft(TreeNode.from(2)))
       .setRight(TreeNode.from(0).setLeft(TreeNode.from(3)));
     // -> 9
-    System.out.println(new Solution_me_递归().rob(root));
+    System.out.println(new Solution_me_暴力递归().rob(root));
     System.out.println(new Solution_other().rob(root));
+    System.out.println(new Solution_me_最优子结构递归().rob(root));
+    System.out.println();
 
     root =
       TreeNode
@@ -20,8 +22,10 @@ public class T337_house_robber_iii {
         .setLeft(TreeNode.from(2).setRight(TreeNode.from(3)))
         .setRight(TreeNode.from(3).setRight(TreeNode.from(1)));
     // -> 7
-    System.out.println(new Solution_me_递归().rob(root));
+    System.out.println(new Solution_me_暴力递归().rob(root));
     System.out.println(new Solution_other().rob(root));
+    System.out.println(new Solution_me_最优子结构递归().rob(root));
+    System.out.println();
 
     root =
       TreeNode
@@ -31,11 +35,13 @@ public class T337_house_robber_iii {
         )
         .setRight(TreeNode.from(5).setRight(TreeNode.from(1)));
     // -> 9
-    System.out.println(new Solution_me_递归().rob(root));
+    System.out.println(new Solution_me_暴力递归().rob(root));
     System.out.println(new Solution_other().rob(root));
+    System.out.println(new Solution_me_最优子结构递归().rob(root));
+    System.out.println();
   }
 
-  static class Solution_me_递归 {
+  static class Solution_me_暴力递归 {
 
     public int rob(TreeNode root) {
       /* 鲁棒性 特殊条件 输入过少 */
@@ -90,20 +96,26 @@ public class T337_house_robber_iii {
    * 最优子结构 是 7个节点 的 一颗爷孙二叉树
    * result = max(
    *  val(root) +
-   *  val(root.left.left) + val(root.left.right) +
-   *  val(root.right.left) + val(root.right.right)
+   *  rob(root.left.left) + rob(root.left.right) +
+   *  rob(root.right.left) + rob(root.right.right)
    *  ,
    *  rob(root.left) + rob(root.right);
    * )
+   *
+   * 复杂度太高，超时了哈哈哈哈
    */
-  static class Solution {
+  static class Solution_me_最优子结构递归 {
 
+    /** 安全的取值函数 —— 无惧输入为 null */
     int val(TreeNode node) {
       return (node == null) ? 0 : node.val;
     }
 
-    TreeNode getLeft(TreeNode node) {
-      return (node == null) ? null : node.left;
+    /** 安全的取值函数 —— 无惧输入为 null */
+    TreeNode getSon(TreeNode node, String who) {
+      return (node == null)
+        ? null
+        : ("left".equals(who) ? node.left : node.right);
     }
 
     public int rob(TreeNode root) {
@@ -111,26 +123,16 @@ public class T337_house_robber_iii {
       if (root == null) {
         return 0;
       }
-      return Math.max(robSubTree(root, true), robSubTree(root, false));
-    }
-
-    private int robSubTree(TreeNode root, boolean isRootSelected) {
-      /* 仔细看 我的程序 保证了 robSubTree 的 root 不是 null */
-      if (root == null) throw new RuntimeException(
-        "robSubTree's root shouldn't be NULL !!!"
-      );
-      if (isRootSelected) {
-        return (
-          root.val +
-          (root.left == null ? 0 : robSubTree(root.left, !isRootSelected)) +
-          (root.right == null ? 0 : robSubTree(root.right, !isRootSelected))
-        );
-      } else {
-        return (
-          (root.left == null ? 0 : robSubTree(root.left, !isRootSelected)) +
-          (root.right == null ? 0 : robSubTree(root.right, !isRootSelected))
-        );
-      }
+      /* 可能性一 去 爷爷家 和 四个孙子的小区 */
+      int get_5 =
+        val(root) +
+        rob(getSon(getSon(root, "left"), "right")) +
+        rob(getSon(getSon(root, "left"), "left")) +
+        rob(getSon(getSon(root, "right"), "left")) +
+        rob(getSon(getSon(root, "right"), "right"));
+      /* 可能性二 去 两个儿子的小区 */
+      int get_2 = rob(getSon(root, "left")) + rob(getSon(root, "right"));
+      return Math.max(get_5, get_2);
     }
   }
 }
