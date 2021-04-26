@@ -40,7 +40,7 @@ public class T25_reverse_nodes_in_k_group {
 
     public ListNode reverseKGroup(ListNode head, int k) {
       // System.out.println("\t\t\t\t" + ((head == null) ? "NULL" : head.toList()) + "\t" + k);
-      
+
       /* 鲁棒性 输入head太短 则不做翻转 */
       int groupSize = k;
       ListNode cur = head;
@@ -55,7 +55,7 @@ public class T25_reverse_nodes_in_k_group {
         cur = cur.next;
       }
       /* 修复 head 长度 == k 时，于是 cur 为 null ，对 cur.next 的异常访问造成的空指针异常 */
-      heads[k] = cur == null ? null : cur.next;
+      heads[k] = cur;
 
       for (int i = 1; i < k; i++) {
         heads[i].next = heads[i - 1];
