@@ -22,8 +22,53 @@ public class T23_merge_k_sorted_lists {
   /* 分治归并 1ms 100% */
   static class Solution {
 
-    public char[] mergeKLists(ListNode[] lists) {
-      return null;
+    public ListNode mergeKLists(ListNode[] lists) {
+      return merge(lists, 0, lists.length - 1);
+    }
+
+    /* 左右指针 遍历 链表列表。递归，二分归并。 */
+    public ListNode merge(ListNode[] lists, int left, int right) {
+      if (left == right) {
+        /* 左右指针指向了同一个链表 */
+        return lists[left];
+      }
+
+      if (left > right) {
+        /* 左指针越界 —— 超过了右指针 */
+        return null;
+      }
+
+      /* 二分归并 */
+      int mid = (left + right) >> 1;
+
+      /* 递归 二分 合并链表 */
+      return mergeTwoLists(
+        merge(lists, left, mid),
+        merge(lists, mid + 1, right)
+      );
+    }
+
+    public ListNode mergeTwoLists(ListNode a, ListNode b) {
+      if (a == null || b == null) {
+        return a == null ? b : a;
+      }
+      ListNode dummy = new ListNode(0);
+      ListNode tail, l1, l2;
+      tail = dummy;
+      l1 = a;
+      l2 = b;
+      while (l1 != null && l2 != null) {
+        if (l1.val < l2.val) {
+          tail.next = l1;
+          l1 = l1.next;
+        } else {
+          tail.next = l2;
+          l2 = l2.next;
+        }
+        tail = tail.next;
+      }
+      tail.next = ((l1 == null) ? l2 : l1);
+      return dummy.next;
     }
   }
 
