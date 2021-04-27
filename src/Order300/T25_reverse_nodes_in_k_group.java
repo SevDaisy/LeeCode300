@@ -67,6 +67,7 @@ public class T25_reverse_nodes_in_k_group {
     }
   }
 
+  /** 递归实现，原地旋转k位，终级算法 */
   static class Solution {
 
     public ListNode reverseKGroup(ListNode head, int k) {
@@ -91,13 +92,16 @@ public class T25_reverse_nodes_in_k_group {
        * k 号位节点可能是 null
        */
       ListNode kthNode = cur;
-      ListNode reversedListHead = null;
+      ListNode reversedListHead = null; // 用 头插法 生成翻转后的链表
       // ListNode reversedListTail = null;
       cur = head;
       while (cur != kthNode) {
+        /* 保存未翻转的部分里，除去首个节点以后，剩下的链表 */
         ListNode second = cur.next;
+        /* 头插法 step_1 把当前节点插到 翻转后链表 的头部 */
         cur.next = reversedListHead;
         // if (reversedListHead == null) reversedListTail = cur;
+        /* 头插法 step_2 翻转后链表 的头指针，更新为当前节点 */
         reversedListHead = cur;
         cur = second;
       }
@@ -107,7 +111,7 @@ public class T25_reverse_nodes_in_k_group {
        * 在上面那个 while (cur != kthNode) 开始之前
        * 因为 kthNode 是 链表中的 k 号位节点 —— 索引从 0 开始
        * 同时 cur 是 head，也就是 链表中的 0 号位节点
-       * 又因为 k > 0, 所以一定又 cur != kthNode, 所以循环会至少执行一次
+       * 又因为 k > 0, 所以一定有 cur != kthNode, 所以循环会至少执行一次
        * 所以，语句 reversedListTail = cur; 一定会被执行到。
        * 而当时，cur也就是head，所以 reversedListTail 的值一定会被赋为 head
        *
