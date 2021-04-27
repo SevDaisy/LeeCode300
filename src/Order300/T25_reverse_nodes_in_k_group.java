@@ -92,28 +92,29 @@ public class T25_reverse_nodes_in_k_group {
        */
       ListNode kthNode = cur;
       ListNode reversedListHead = null;
-      ListNode reversedListTail = null;
+      // ListNode reversedListTail = null;
       cur = head;
       while (cur != kthNode) {
         ListNode second = cur.next;
         cur.next = reversedListHead;
-        if (reversedListHead == null) reversedListTail = cur;
+        // if (reversedListHead == null) reversedListTail = cur;
         reversedListHead = cur;
         cur = second;
       }
       /**
        * k 号位节点及其以后的节点，翻转了以后，再连接到已经翻转好了的链表的尾部
-       * 
+       *
        * 在上面那个 while (cur != kthNode) 开始之前
        * 因为 kthNode 是 链表中的 k 号位节点 —— 索引从 0 开始
-       * 同时 cur 是 head，也就是 链表中的 0 号位节点 
+       * 同时 cur 是 head，也就是 链表中的 0 号位节点
        * 又因为 k > 0, 所以一定又 cur != kthNode, 所以循环会至少执行一次
        * 所以，语句 reversedListTail = cur; 一定会被执行到。
        * 而当时，cur也就是head，所以 reversedListTail 的值一定会被赋为 head
-       * 
+       *
        * 综上所诉，reversedListTail 可以由 head 完全等价替换
-       **/ 
-      reversedListTail.next = reverseKGroup(kthNode, k);
+       **/
+      // reversedListTail.next = reverseKGroup(kthNode, k);
+      head.next = reverseKGroup(kthNode, k);
 
       return reversedListHead;
     }
