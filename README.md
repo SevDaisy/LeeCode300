@@ -1,6 +1,6 @@
-##
+## 个人博客链接
 
-个人博客链接 —— [www.zdiml.xyz](https://www.zdiml.xyz/categories/LeeCode%E4%B8%89%E7%99%BE%E9%A2%98/)
+[www.zdiml.xyz](https://www.zdiml.xyz/categories/LeeCode%E4%B8%89%E7%99%BE%E9%A2%98/)
 
 ## 部分精选题目编号序列
 
