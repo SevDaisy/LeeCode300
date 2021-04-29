@@ -36,6 +36,11 @@ public class T1345_jump_game_iv {
       "\nanswer is 3 but " + new Solution().minJumps(nums) + "\n"
     ); // -> 3
 
+    nums = new int[] { 7, 7, 2, 1, 7, 7, 7, 3, 4, 1 };
+    System.out.println(
+      "\nanswer is 3 but " + new Solution().minJumps(nums) + "\n"
+    ); // -> 3
+
     nums = BaseNode.BigCaseVal.nums_T1345; // nums_T1345.length = 3549
     System.out.println(
       "\nanswer is 30 but " + new Solution().minJumps(nums) + "\n"
@@ -55,7 +60,29 @@ public class T1345_jump_game_iv {
       if (arr == null || arr.length < 1) {
         return 0;
       }
+
       int iMax = arr.length;
+      /* 剪枝 合并数组中连续的相同项为相同的两项 48ms => 94.36% */
+      LinkedList<Integer> list = new LinkedList<>();
+      int last = arr[0];
+      int count = 0;
+      list.add(last);
+      for (int x : arr) {
+        if (x == last) {
+          if (++count == 2) {
+            list.add(last);
+          }
+        } else {
+          count = 0;
+          last = x;
+          list.add(last);
+        }
+      }
+      iMax = list.size();
+      arr = new int[iMax];
+      int xi = 0;
+      for (int x : list) arr[xi++] = x;
+
       Queue<Integer> queue = new LinkedList<>();
       /* 对 索引 的 访问记录 */
       boolean[] visited = new boolean[iMax];/* boolean 默认初始值为 false */
