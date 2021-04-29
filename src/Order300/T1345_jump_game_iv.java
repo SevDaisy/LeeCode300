@@ -1,10 +1,10 @@
 package Order300;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class T1345_jump_game_iv {
@@ -25,6 +25,13 @@ public class T1345_jump_game_iv {
 
   static class Solution {
 
+    static final Comparator<Integer> descendComparator = new Comparator<Integer>() {
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o2 - o1;
+      }
+    };
+
     public int minJumps(int[] arr) {
       if (arr == null || arr.length < 1) {
         return 0;
@@ -36,19 +43,20 @@ public class T1345_jump_game_iv {
       /* 对 跳转值 的 访问记录 */
       HashSet<Integer> valSet = new HashSet<>();
       /* 记录可跳转的组 */
-      HashMap<Integer, List<Integer>> valGroup = new HashMap<Integer, List<Integer>>();
+      HashMap<Integer, Queue<Integer>> valGroup = new HashMap<Integer, Queue<Integer>>();
 
       for (int i = 0; i < iMax; i++) {
         int cur = arr[i];
         if (valGroup.containsKey(cur)) {
           /**
            * 其实这个 group 最好是降序排序的
-           * ? 可能的优化方向: 用 降序 排序的 PriorityQueue 代替 ArrayList
+           * // 可能的优化方向: 用 降序 排序的 PriorityQueue 代替 ArrayList
+           * 当前 group 已经是 PriorityQueue
            */
           valGroup.get(cur).add(i);
         } else {
           /* 实际上，对于每个 group，第一次遇到的索引 i 并不需要保存 */
-          List<Integer> group = new ArrayList<Integer>();
+          Queue<Integer> group = new PriorityQueue<Integer>(descendComparator);
           valGroup.put(cur, group);
         }
       }
@@ -58,7 +66,7 @@ public class T1345_jump_game_iv {
       int next;
       int stepCnt = 0;
       int levelSize;
-      List<Integer> nextJumps;
+      Queue<Integer> nextJumps;
       queue.add(0);
       while (!queue.isEmpty()) {
         levelSize = queue.size();
