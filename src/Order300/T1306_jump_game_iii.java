@@ -74,6 +74,7 @@ public class T1306_jump_game_iii {
     }
   }
 
+  /* 最终优化版的递归 3ms */
   static class Solution {
 
     public boolean canReach(int[] arr, int start) {
@@ -81,13 +82,18 @@ public class T1306_jump_game_iii {
       return step(arr, start, visited);
     }
 
-    private boolean step(int[] arr, int curPos, boolean[] visited) {
-      if (curPos < 0 || curPos >= arr.length || visited[curPos]) return false;
-      if (arr[curPos] == 0) return true;
-      visited[curPos] = true;
+    private boolean step(int[] arr, int cur, boolean[] visited) {
+      if (visited[cur]) return false;
+      if (arr[cur] == 0) return true;
+      visited[cur] = true;
+
       return (
-        step(arr, curPos - arr[curPos], visited) ||
-        step(arr, curPos + arr[curPos], visited)
+        ((cur - arr[cur] >= 0) ? step(arr, cur - arr[cur], visited) : false) ||
+        (
+          (cur + arr[cur] < arr.length)
+            ? step(arr, cur + arr[cur], visited)
+            : false
+        )
       );
     }
   }
