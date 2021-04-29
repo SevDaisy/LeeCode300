@@ -74,7 +74,7 @@ public class T1306_jump_game_iii {
     }
   }
 
-  /* 最终优化版的递归 3ms */
+  /* 最终优化版的递归 3ms => 96.72% */
   static class Solution {
 
     public boolean canReach(int[] arr, int start) {
