@@ -31,7 +31,7 @@ public class T1345_jump_game_iv {
 
       for (int i = 0; i < iMax; i++) {
         int cur = arr[i];
-        if (valGroup.containsKey(i)) {
+        if (valGroup.containsKey(cur)) {
           /**
            * 其实这个 group 最好是降序排序的
            * ? 可能的优化方向: 用 降序 排序的 PriorityQueue 代替 ArrayList
@@ -40,7 +40,7 @@ public class T1345_jump_game_iv {
         } else {
           /* 实际上，对于每个 group，第一次遇到的索引 i 并不需要保存 */
           List<Integer> group = new ArrayList<Integer>();
-          valGroup.put(i, group);
+          valGroup.put(cur, group);
         }
       }
 
