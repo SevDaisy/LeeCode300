@@ -17,7 +17,7 @@ public class T1345_jump_game_iv {
     // System.out.println(new Solution().minJumps(nums)); // -> 3
     // System.out.println(new Solution_other().minJumps(nums)); // -> 3
     // System.out.println();
-    
+
     // nums = new int[] { 7 };
     // System.out.println(new Solution().minJumps(nums)); // -> 0
     // System.out.println(new Solution_other().minJumps(nums)); // -> 0
@@ -37,12 +37,11 @@ public class T1345_jump_game_iv {
     // System.out.println(new Solution().minJumps(nums)); // -> 3
     // System.out.println(new Solution_other().minJumps(nums)); // -> 3
     // System.out.println();
-    
-    nums = zyy.BigCaseVal.nums_T1345;// nums_T1345.length = 3549
+
+    nums = zyy.BigCaseVal.nums_T1345; // nums_T1345.length = 3549
     System.out.println(new Solution().minJumps(nums)); // -> 30
     System.out.println(new Solution_other().minJumps(nums)); // -> 30
     System.out.println();
-
   }
 
   static class Solution {
@@ -77,8 +76,12 @@ public class T1345_jump_game_iv {
            */
           valGroup.get(cur).offer(i);
         } else {
-          /* 实际上，对于每个 group，第一次遇到的索引 i 并不需要保存 */
+          /**
+           * // 实际上，对于每个 group，第一次遇到的索引 i 并不需要保存
+           * 上面这个想法是错的。详见 line: [114 ~ 121]
+           */
           Queue<Integer> group = new PriorityQueue<Integer>(descendComparator);
+          group.offer(i);
           valGroup.put(cur, group);
         }
       }
@@ -92,6 +95,7 @@ public class T1345_jump_game_iv {
       queue.offer(0);
       while (!queue.isEmpty()) {
         levelSize = queue.size();
+        // System.err.printf("%d -> ", levelSize);
         while (levelSize-- > 0) {
           /* 取 索引 */
           cur = queue.poll().intValue();
@@ -107,25 +111,34 @@ public class T1345_jump_game_iv {
           if (valSet.add(curVal) && valGroup.containsKey(curVal)) {
             nextJumps = valGroup.get(curVal);
             for (int x : nextJumps) {
-              /* 不需要 if (!visited[x]) 因为跳跃肯定是往右跳 */
-              queue.offer(x);
-              System.out.printf("%d ",x);
+              /**
+               * // 不需要 if (!visited[x]) 因为跳跃肯定是往右跳
+               * 上面这个想法是错误的！考虑 A1 ... B1 ... B2 A2
+               * 可能会因为 A 就 A1 -> A2
+               * 然后 A2 向左走是 B2
+               * 结果现在 B2 跳不到 B1 了！—— 因为 group 中只存了 B2
+               * 甚至会 B2 跳到 B2 ！—— 因为我这边取消了 if (!visited[x])
+               **/
+              if (!visited[x]) {
+                queue.offer(x);
+                // System.err.printf("%d ", x);
+              }
             }
           }
           /* 试着右走 */
           next = cur + 1;
           if (next < iMax && !visited[next]) {
             queue.offer(next);
-            System.out.printf("%d ",next);
+            // System.err.printf("%d ", next);
           }
           /* 试着左走 */
           next = cur - 1;
           if (next >= 0 && !visited[next]) {
             queue.offer(next);
-            System.out.printf("%d ",next);
+            // System.err.printf("%d ", next);
           }
         }
-        System.out.println();
+        // System.err.println();
         stepCnt++;
       }
 
