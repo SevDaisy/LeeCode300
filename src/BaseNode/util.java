@@ -2,7 +2,7 @@ package BaseNode;
 
 public abstract class util {
 
-  public static <E, T extends Iterable<E>> void debugPrintList(
+  public static <E, T extends Iterable<E>> void errPrintList(
     T list,
     String name
   ) {
