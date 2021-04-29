@@ -10,8 +10,17 @@ import java.util.Queue;
 public class T1345_jump_game_iv {
 
   public static void main(String[] args) {
-    int[] nums = new int[] { 100, -23, -23, 404, 100, 23, 23, 23, 3, 404 };
-    System.out.println(new Solution().minJumps(nums));
+    int[] nums;
+    nums = new int[] { 100, -23, -23, 404, 100, 23, 23, 23, 3, 404 };
+    System.out.println(new Solution().minJumps(nums)); // -> 3
+    nums = new int[] { 7 };
+    System.out.println(new Solution().minJumps(nums)); // -> 0
+    nums = new int[] { 7, 6, 9, 6, 9, 6, 9, 7 };
+    System.out.println(new Solution().minJumps(nums)); // -> 1
+    nums = new int[] { 6, 1, 9 };
+    System.out.println(new Solution().minJumps(nums)); // -> 2
+    nums = new int[] { 11, 22, 7, 7, 7, 7, 7, 7, 7, 22, 13 };
+    System.out.println(new Solution().minJumps(nums)); // -> 3
   }
 
   static class Solution {
