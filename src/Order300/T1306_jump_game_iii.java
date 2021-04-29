@@ -1,6 +1,7 @@
 package Order300;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 public class T1306_jump_game_iii {
@@ -22,7 +23,8 @@ public class T1306_jump_game_iii {
     System.out.println(new Solution().canReach(nums, start)); // -> false
   }
 
-  static class Solution {
+  /** 递归实现 9ms => 31.71% */
+  static class Solution_递归 {
 
     private boolean step(int[] nums, int cur, Set<Integer> walked) {
       if (cur < 0 || cur >= nums.length) {
@@ -46,6 +48,47 @@ public class T1306_jump_game_iii {
         return false;
       }
       return step(arr, start, new HashSet<Integer>(arr.length));
+    }
+  }
+
+  /** 迭代实现 14～16ms */
+  static class Solution_迭代 {
+
+    public boolean canReach(int[] arr, int start) {
+      if (arr == null || arr.length < 1) {
+        return false;
+      }
+      int iMax = arr.length;
+      Set<Integer> visited = new HashSet<Integer>(iMax);
+      LinkedList<Integer> stack = new LinkedList<Integer>();
+      stack.add(start);
+      while (!stack.isEmpty()) {
+        int cur = stack.removeLast();
+        if (arr[cur] == 0) return true;
+        if (visited.add(cur)) {
+          if (cur - arr[cur] >= 0) stack.add(cur - arr[cur]);
+          if (cur + arr[cur] < iMax) stack.add(cur + arr[cur]);
+        }
+      }
+      return false;
+    }
+  }
+
+  static class Solution {
+
+    public boolean canReach(int[] arr, int start) {
+      boolean[] visited = new boolean[arr.length];
+      return step(arr, start, visited);
+    }
+
+    private boolean step(int[] arr, int curPos, boolean[] visited) {
+      if (curPos < 0 || curPos >= arr.length || visited[curPos]) return false;
+      if (arr[curPos] == 0) return true;
+      visited[curPos] = true;
+      return (
+        step(arr, curPos - arr[curPos], visited) ||
+        step(arr, curPos + arr[curPos], visited)
+      );
     }
   }
 }
