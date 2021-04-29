@@ -10,17 +10,15 @@ public class T55_jump_game {
   static class Solution {
 
     public boolean canJump(int[] nums) {
-      if (nums == null || nums.length < 1) {
-        return false;
-      }
+      if (nums == null || nums.length < 1) return false;
       int iMax = nums.length;
       int rightMax = 0;
 
-      for (int i = 0; i < iMax; i++) {
-        if (i <= rightMax) {
-          rightMax = Math.max(rightMax, i + nums[i]);
-          if (rightMax + 1 >= iMax) return true;
-        }
+      for (int i = 0; i < iMax && i <= rightMax; i++) {
+        /* 更新最远可达的位置 */
+        rightMax = Math.max(rightMax, i + nums[i]);
+        /* 如果最远已经达到或者超过终点了，返回成功 */
+        if (rightMax + 1 >= iMax) return true;
       }
 
       return false;
