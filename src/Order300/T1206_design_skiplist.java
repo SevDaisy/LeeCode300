@@ -196,8 +196,12 @@ public class T1206_design_skiplist {
     }
   }
 
-  /** 跳跃表高端实现，优雅又强大 17ms => 99.33% */
+  /** 跳跃表高端实现，优雅又强大 16 ~ 17ms => 99.499% ~ 99.33%
+   * ? 看不懂大佬的实现。记得之后自己重写一次哦
+   */
   static class Skiplist_终极 {
+
+    private static final int MAX_LAVAL = 64;
 
     Node head;
 
@@ -218,7 +222,7 @@ public class T1206_design_skiplist {
       return false;
     }
 
-    Node[] stack = new Node[64];
+    Node[] stack = new Node[MAX_LAVAL];
     Random random = new Random();
 
     public void add(int num) {
@@ -236,7 +240,7 @@ public class T1206_design_skiplist {
         node = stack[--size];
         node.right = new Node(node.right, down, num);
         down = node.right;
-        up = (random.nextInt() & 1) == 1;
+        up = (random.nextInt() & 3) == 0;
       }
       if (up) {
         head = new Node(new Node(null, down, num), head, Integer.MIN_VALUE);
