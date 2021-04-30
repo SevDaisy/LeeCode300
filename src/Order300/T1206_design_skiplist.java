@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 public class T1206_design_skiplist {
 
-  public static void main(String[] args) {
-    
-  }
+  public static void main(String[] args) {}
 
-  static class Skiplist {
+  public static class Skiplist {
 
     /* 与其纠结前后左右指针怎么选，不如直接写好4个方向的指针到时候再改 */
     private static class Node {
@@ -30,21 +28,20 @@ public class T1206_design_skiplist {
         this.s = who;
         return this;
       }
-
       // Node setD(Node who) {  this.d = who;  return this;}
 
-      @Override
-      public String toString() {
-        return String.format(
-          "val:%d a:%s d:%s level:%d w:%s s:%s",
-          val,
-          (a != null) ? String.valueOf(a.val) : "null",
-          (d != null) ? String.valueOf(d.val) : "null",
-          level,
-          (w != null) ? String.valueOf(w.val) : "null",
-          (s != null) ? String.valueOf(s.val) : "null"
-        );
-      }
+      // @Override
+      // public String toString() {
+      //   return String.format(
+      //     "val:%d a:%s d:%s level:%d w:%s s:%s",
+      //     val,
+      //     (a != null) ? String.valueOf(a.val) : "null",
+      //     (d != null) ? String.valueOf(d.val) : "null",
+      //     level,
+      //     (w != null) ? String.valueOf(w.val) : "null",
+      //     (s != null) ? String.valueOf(s.val) : "null"
+      //   );
+      // }
     }
 
     private static final int MAX_LAVAL = 64;
@@ -52,7 +49,7 @@ public class T1206_design_skiplist {
     ArrayList<Node> dummys = new ArrayList<>();
 
     private boolean coinFlip() {
-      return (System.nanoTime() & 1) == 0;
+      return (System.nanoTime() & 3) == 0;
     }
 
     /**
@@ -193,7 +190,7 @@ public class T1206_design_skiplist {
         if (lefts[i] != null) lefts[i].d = rights[i];
         if (rights[i] != null) rights[i].a = lefts[i];
       }
-      erase(num);
+      /* 不需要递归调用来把num都删光erase(num); 就是只删 level 1 的一个就可以了 */
       return true;
     }
   }
