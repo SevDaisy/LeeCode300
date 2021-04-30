@@ -161,11 +161,32 @@ public class T1206_design_skiplist {
     }
 
     public boolean search(int target) {
-      return (findValAtLevel(dummys.get(0), target, 1) == null) ? false : true;
+      return (findValAtLevel(dummys.get(dummys.size() - 1), target, 1) == null)
+        ? false
+        : true;
     }
 
     public boolean erase(int num) {
-      return false;
+      Node who = findValAtLevel(dummys.get(dummys.size() - 1), num, 1);
+      if (who == null) return false;
+      Node[] lefts = new Node[MAX_LAVAL];
+      Node[] rights = new Node[MAX_LAVAL];
+      int nodeCnt = 0;
+      while (who != null) {
+        if (who.val != num) throw new RuntimeException(
+          "找错了要删除的中心节点"
+        );
+        lefts[nodeCnt] = who.a;
+        rights[nodeCnt] = who.d;
+        who = who.a;
+        nodeCnt++;
+      }
+      for (int i = 0; i < nodeCnt; i++) {
+        if (lefts[i] != null) lefts[i].d = rights[i];
+        if (rights[i] != null) rights[i].a = lefts[i];
+      }
+      erase(num);
+      return true;
     }
 
     public void test() {
