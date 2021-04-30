@@ -8,14 +8,15 @@ public abstract class util {
   public static void main(String[] args) {
     ArrayList<Integer> arrayList = new ArrayList<Integer>() {
       {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i <= 3; i++) {
           add(i);
         }
       }
     };
+    System.err.print("arrayList:");
     arrayList.forEach(x -> System.err.print(" " + x));
     System.err.println();
-    errPrintList(Arrays.asList(new int[] { 1, 2, 3 }), "test");
+    errPrintList(Arrays.asList(new Integer[] { 1, 2, 3 }), " testList");
   }
 
   /**
@@ -29,8 +30,8 @@ public abstract class util {
     T list,
     String name
   ) {
-    System.err.print(name + " is ");
-    list.forEach(x -> System.err.print(" " + (E) x));
+    System.err.print(name + ":");
+    for (E x : list) System.err.print(" " + x);
     System.err.println();
   }
 }
