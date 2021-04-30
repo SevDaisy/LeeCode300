@@ -5,14 +5,7 @@ import java.util.ArrayList;
 public class T1206_design_skiplist {
 
   public static void main(String[] args) {
-    int target = 1;
-    int num = 1;
-    new Skiplist().test();
-    /** Your Skiplist object will be instantiated and called as such ↓↓↓ */
-    Skiplist obj = new Skiplist();
-    obj.search(target);
-    obj.add(num);
-    obj.erase(num);
+    
   }
 
   static class Skiplist {
@@ -37,7 +30,21 @@ public class T1206_design_skiplist {
         this.s = who;
         return this;
       }
+
       // Node setD(Node who) {  this.d = who;  return this;}
+
+      @Override
+      public String toString() {
+        return String.format(
+          "val:%d a:%s d:%s level:%d w:%s s:%s",
+          val,
+          (a != null) ? String.valueOf(a.val) : "null",
+          (d != null) ? String.valueOf(d.val) : "null",
+          level,
+          (w != null) ? String.valueOf(w.val) : "null",
+          (s != null) ? String.valueOf(s.val) : "null"
+        );
+      }
     }
 
     private static final int MAX_LAVAL = 64;
@@ -90,6 +97,7 @@ public class T1206_design_skiplist {
     }
 
     private void addAtLevel(int num, int tarLevel) {
+      // System.err.printf("add > num: %d\t level:%d\n", num, tarLevel);
       Node cur;
       /* 如果 dummys 高度不够，则补足 */
       if (tarLevel > this.dummys.size()) for (
@@ -167,18 +175,18 @@ public class T1206_design_skiplist {
     }
 
     public boolean erase(int num) {
-      Node who = findValAtLevel(dummys.get(dummys.size() - 1), num, 1);
-      if (who == null) return false;
+      Node cur = findValAtLevel(dummys.get(dummys.size() - 1), num, 1);
+      if (cur == null) return false;
       Node[] lefts = new Node[MAX_LAVAL];
       Node[] rights = new Node[MAX_LAVAL];
       int nodeCnt = 0;
-      while (who != null) {
-        if (who.val != num) throw new RuntimeException(
+      while (cur != null) {
+        if (cur.val != num) throw new RuntimeException(
           "找错了要删除的中心节点"
         );
-        lefts[nodeCnt] = who.a;
-        rights[nodeCnt] = who.d;
-        who = who.a;
+        lefts[nodeCnt] = cur.a;
+        rights[nodeCnt] = cur.d;
+        cur = cur.w;
         nodeCnt++;
       }
       for (int i = 0; i < nodeCnt; i++) {
@@ -187,20 +195,6 @@ public class T1206_design_skiplist {
       }
       erase(num);
       return true;
-    }
-
-    public void test() {
-      Skiplist list = new Skiplist();
-      System.out.println("adding 30 1");
-      list.addAtLevel(30, 1);
-      System.out.println("adding 50 1");
-      list.addAtLevel(50, 1);
-      System.out.println("adding 70 1");
-      list.addAtLevel(70, 1);
-      if (dummys.size() < 2) {
-        list.addAtLevel(50, 2);
-      }
-      System.out.println("Checked");
     }
   }
 }
