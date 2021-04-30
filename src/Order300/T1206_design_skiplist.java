@@ -1,6 +1,7 @@
 package Order300;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class T1206_design_skiplist {
 
@@ -192,6 +193,80 @@ public class T1206_design_skiplist {
       }
       /* 不需要递归调用来把num都删光erase(num); 就是只删 level 1 的一个就可以了 */
       return true;
+    }
+  }
+
+  /** 跳跃表高端实现，优雅又强大 17ms => 99.33% */
+  static class Skiplist_终极 {
+
+    Node head;
+
+    public Skiplist_终极() {
+      head = new Node(null, null, Integer.MIN_VALUE);
+    }
+
+    public boolean search(int target) {
+      Node p;
+      for (p = head; p != null; p = p.down) {
+        while (p.right != null && target > p.right.val) {
+          p = p.right;
+        }
+        if (p.right != null && p.right.val == target) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    Node[] stack = new Node[64];
+    Random random = new Random();
+
+    public void add(int num) {
+      int size = 0;
+      for (Node p = head; p != null; p = p.down) {
+        while (p.right != null && num > p.right.val) {
+          p = p.right;
+        }
+        stack[size++] = p;
+      }
+      Node down = null;
+      Node node;
+      boolean up = true;
+      while (up && size > 0) {
+        node = stack[--size];
+        node.right = new Node(node.right, down, num);
+        down = node.right;
+        up = (random.nextInt() & 1) == 1;
+      }
+      if (up) {
+        head = new Node(new Node(null, down, num), head, Integer.MIN_VALUE);
+      }
+    }
+
+    public boolean erase(int num) {
+      boolean flag = false;
+      for (Node p = head; p != null; p = p.down) {
+        while (p.right != null && num > p.right.val) {
+          p = p.right;
+        }
+        if (p.right != null && p.right.val == num) {
+          p.right = p.right.right;
+          flag = true;
+        }
+      }
+      return flag;
+    }
+
+    static class Node {
+
+      Node right, down;
+      int val;
+
+      public Node(Node right, Node down, int val) {
+        this.right = right;
+        this.down = down;
+        this.val = val;
+      }
     }
   }
 }
