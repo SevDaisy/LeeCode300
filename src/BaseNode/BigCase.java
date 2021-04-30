@@ -19,87 +19,87 @@ public abstract class BigCase {
       list.add(12);
       list.add(9);
       list.add(12);
-      if (list.erase(3) != true) System.out.println("01 erase(3)"); // -> true
-      if (list.search(6) != false) System.out.println("02 search(6)"); // -> false
+      if (list.erase(3) != true) System.out.println("01 erase(3)");
+      if (list.search(6) != false) System.out.println("02 search(6)");
       list.add(7);
-      if (list.erase(0) != true) System.out.println("03 erase(0)"); // -> true
-      if (list.erase(1) != false) System.out.println("04 erase(1)"); // -> false
-      if (list.erase(10) != false) System.out.println("05 erase(10)"); // -> false
+      if (list.erase(0) != true) System.out.println("03 erase(0)");
+      if (list.erase(1) != false) System.out.println("04 erase(1)");
+      if (list.erase(10) != false) System.out.println("05 erase(10)");
       list.add(5);
-      if (list.search(12) != true) System.out.println("06 search(12)"); // -> true
-      if (list.search(7) != true) System.out.println("07 search(7)"); // -> true
-      if (list.search(16) != true) System.out.println("08 search(16)"); // -> true
-      if (list.erase(7) != true) System.out.println("09 erase(7)"); // -> true
-      if (list.search(0) != false) System.out.println("10 search(0)"); // -> false
+      if (list.search(12) != true) System.out.println("06 search(12)");
+      if (list.search(7) != true) System.out.println("07 search(7)");
+      if (list.search(16) != true) System.out.println("08 search(16)");
+      if (list.erase(7) != true) System.out.println("09 erase(7)");
+      if (list.search(0) != false) System.out.println("10 search(0)");
       list.add(9);
       list.add(16);
       list.add(3);
-      if (list.erase(2) != false) System.out.println("11 erase(2)"); // -> false
-      if (list.search(17) != false) System.out.println("12 search(17)"); // -> false
+      if (list.erase(2) != false) System.out.println("11 erase(2)");
+      if (list.search(17) != false) System.out.println("12 search(17)");
       list.add(2);
-      if (list.search(17) != false) System.out.println("13 search(17)"); // -> false
-      if (list.erase(0) != false) System.out.println("14 erase(0)"); // -> false
-      if (list.search(9) != true) System.out.println("15 search(9)"); // -> true
-      if (list.search(14) != true) System.out.println("16 search(14)"); // -> true
-      if (list.erase(1) != false) System.out.println("17 erase(1)"); // -> false
-      if (list.erase(6) != false) System.out.println("18 erase(6)"); // -> false
+      if (list.search(17) != false) System.out.println("13 search(17)");
+      if (list.erase(0) != false) System.out.println("14 erase(0)");
+      if (list.search(9) != true) System.out.println("15 search(9)");
+      if (list.search(14) != true) System.out.println("16 search(14)");
+      if (list.erase(1) != false) System.out.println("17 erase(1)");
+      if (list.erase(6) != false) System.out.println("18 erase(6)");
       list.add(1);
-      if (list.erase(16) != true) System.out.println("19 erase(16)"); // -> true
-      if (list.search(9) != true) System.out.println("20 search(9)"); // -> true
-      if (list.erase(10) != false) System.out.println("21 erase(10)"); // -> false
-      if (list.erase(9) != true) System.out.println("22 erase(9)"); // -> true
-      if (list.search(2) != true) System.out.println("23 search(2)"); // -> true
+      if (list.erase(16) != true) System.out.println("19 erase(16)");
+      if (list.search(9) != true) System.out.println("20 search(9)");
+      if (list.erase(10) != false) System.out.println("21 erase(10)");
+      if (list.erase(9) != true) System.out.println("22 erase(9)");
+      if (list.search(2) != true) System.out.println("23 search(2)");
       list.add(3);
       list.add(16);
-      if (list.erase(15) != false) System.out.println("24 erase(15)"); // -> false
-      if (list.erase(12) != true) System.out.println("25 erase(12)"); // -> true
-      if (list.erase(7) != false) System.out.println("26 erase(7)"); // -> false
+      if (list.erase(15) != false) System.out.println("24 erase(15)");
+      if (list.erase(12) != true) System.out.println("25 erase(12)");
+      if (list.erase(7) != false) System.out.println("26 erase(7)");
       list.add(4);
-      if (list.erase(3) != true) System.out.println("27 erase(3)"); // -> true
+      if (list.erase(3) != true) System.out.println("27 erase(3)");
       list.add(2);
-      if (list.erase(1) != true) System.out.println("28 erase(1)"); // -> true
-      if (list.erase(14) != true) System.out.println("29 erase(14)"); // -> true
+      if (list.erase(1) != true) System.out.println("28 erase(1)");
+      if (list.erase(14) != true) System.out.println("29 erase(14)");
       list.add(13);
       list.add(12);
       list.add(3);
-      if (list.search(6) != false) System.out.println("30 search(6)"); // -> false
-      if (list.search(17) != false) System.out.println("31 search(17)"); // -> false
+      if (list.search(6) != false) System.out.println("30 search(6)");
+      if (list.search(17) != false) System.out.println("31 search(17)");
       list.add(2);
-      if (list.erase(3) != true) System.out.println("32 erase(3)"); // -> true
-      if (list.search(14) != false) System.out.println("33 search(14)"); // -> false
+      if (list.erase(3) != true) System.out.println("32 erase(3)");
+      if (list.search(14) != false) System.out.println("33 search(14)");
       list.add(11);
       list.add(0);
-      if (list.search(13) != true) System.out.println("34 search(13)"); // -> true
+      if (list.search(13) != true) System.out.println("34 search(13)");
       list.add(2);
-      if (list.search(1) != false) System.out.println("35 search(1)"); // -> false
-      if (list.erase(10) != false) System.out.println("36 erase(10)"); // -> false
-      if (list.erase(17) != false) System.out.println("37 erase(17)"); // -> false
-      if (list.search(0) != true) System.out.println("38 search(0)"); // -> true
-      if (list.search(5) != true) System.out.println("39 search(5)"); // -> true
-      if (list.erase(8) != false) System.out.println("40 erase(8)"); // -> false
-      if (list.search(9) != true) System.out.println("41 search(9)"); // -> false
+      if (list.search(1) != false) System.out.println("35 search(1)");
+      if (list.erase(10) != false) System.out.println("36 erase(10)");
+      if (list.erase(17) != false) System.out.println("37 erase(17)");
+      if (list.search(0) != true) System.out.println("38 search(0)");
+      if (list.search(5) != true) System.out.println("39 search(5)");
+      if (list.erase(8) != false) System.out.println("40 erase(8)");
+      if (list.search(9) != true) System.out.println("41 search(9)");
       list.add(8);
-      if (list.erase(11) != true) System.out.println("42 erase(11)"); // -> true
-      if (list.search(10) != false) System.out.println("43 search(10)"); // -> false
-      if (list.erase(11) != false) System.out.println("44 erase(11)"); // -> false
-      if (list.search(10) != false) System.out.println("45 search(10)"); // -> false
-      if (list.erase(9) != true) System.out.println("46 erase(9)"); // -> false
-      if (list.erase(8) != true) System.out.println("47 erase(8)"); // -> true
-      if (list.search(15) != false) System.out.println("48 search(15)"); // -> false
-      if (list.search(14) != false) System.out.println("49 search(14)"); // -> false
+      if (list.erase(11) != true) System.out.println("42 erase(11)");
+      if (list.search(10) != false) System.out.println("43 search(10)");
+      if (list.erase(11) != false) System.out.println("44 erase(11)");
+      if (list.search(10) != false) System.out.println("45 search(10)");
+      if (list.erase(9) != true) System.out.println("46 erase(9)");
+      if (list.erase(8) != true) System.out.println("47 erase(8)");
+      if (list.search(15) != false) System.out.println("48 search(15)");
+      if (list.search(14) != false) System.out.println("49 search(14)");
       list.add(1);
       list.add(6);
       list.add(17);
       list.add(16);
-      if (list.search(13) != true) System.out.println("50 search(13)"); // -> true
-      if (list.search(4) != true) System.out.println("51 search(4)"); // -> true
-      if (list.search(5) != true) System.out.println("52 search(5)"); // -> true
-      if (list.search(4) != true) System.out.println("53 search(4)"); // -> true
-      if (list.search(17) != true) System.out.println("54 search(17)"); // -> true
-      if (list.search(16) != true) System.out.println("55 search(16)"); // -> true
-      if (list.search(7) != false) System.out.println("56 search(7)"); // -> false
-      if (list.search(14) != false) System.out.println("57 search(14)"); // -> false
-      if (list.search(1) != true) System.out.println("58 search(1)"); // -> true
+      if (list.search(13) != true) System.out.println("50 search(13)");
+      if (list.search(4) != true) System.out.println("51 search(4)");
+      if (list.search(5) != true) System.out.println("52 search(5)");
+      if (list.search(4) != true) System.out.println("53 search(4)");
+      if (list.search(17) != true) System.out.println("54 search(17)");
+      if (list.search(16) != true) System.out.println("55 search(16)");
+      if (list.search(7) != false) System.out.println("56 search(7)");
+      if (list.search(14) != false) System.out.println("57 search(14)");
+      if (list.search(1) != true) System.out.println("58 search(1)");
     }
   }
 
