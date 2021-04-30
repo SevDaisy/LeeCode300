@@ -41,7 +41,7 @@ public class T1345_jump_game_iv {
       "\nanswer is 3 but " + new Solution().minJumps(nums) + "\n"
     ); // -> 3
 
-    nums = BaseNode.BigCase.nums_T1345; // nums_T1345.length = 3549
+    nums = BaseNode.BigCase.T1345_case.nums_T1345; // nums_T1345.length = 3549
     System.out.println(
       "\nanswer is 30 but " + new Solution().minJumps(nums) + "\n"
     ); // -> 30
