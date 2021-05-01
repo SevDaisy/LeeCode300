@@ -103,4 +103,40 @@ public class T32_longest_valid_parentheses {
       return maxans;
     }
   }
+
+  /* 2021年5月1日，删光了之前的代码，也不看题解和自己的博客，只靠自己尝试重写这题，成功了 */
+  static class me_20210501 {
+
+    public int longestValidParentheses(String s) {
+      if (s == null || s.length() < 2) return 0;
+
+      int iMax = s.length();
+      int[] dp = new int[iMax];
+      int dpMax = 0;
+      /* int[]初值为0，因此此处赋值可省略 */
+      // dp[0] = 0;
+      dp[1] = "()".equals(s.substring(0, 2)) ? 2 : 0;
+
+      for (int i = 2; i < iMax; i++) {
+        if (s.charAt(i) == ')') {
+          /* ...) */
+          if (s.charAt(i - 1) == '(') {
+            /* ...() */
+            dp[i] = dp[i - 2] + 2; // 注意，这里是 dp[i-2]+2 而不是 dp[i-1]+2
+          } else {
+            /* ...)) */
+            /* .?(..)) */
+            int leftPos = i - dp[i - 1] - 1;
+            if (leftPos >= 0 && s.charAt(leftPos) == '(') {
+              dp[i] = 2 + dp[i - 1] + ((leftPos > 0) ? dp[leftPos - 1] : 0);
+            }
+          }
+
+          dpMax = Math.max(dpMax, dp[i]);
+        }
+      }
+      /* 注意 dpMax 还没和 dp[1] 比较过 */
+      return Math.max(dpMax, dp[1]);
+    }
+  }
 }
