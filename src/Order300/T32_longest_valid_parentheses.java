@@ -1,5 +1,7 @@
 package Order300;
 
+import java.util.Stack;
+
 public class T32_longest_valid_parentheses {
 
   /** 本地调试时用于打印 s 和 dp */
@@ -28,7 +30,7 @@ public class T32_longest_valid_parentheses {
     // System.out.println(new Solution().longestValidParentheses("(()())()))")); // -> 8
   }
 
-  static class Solution {
+  static class Solution_me_first {
 
     public int longestValidParentheses(String s) {
       int iMax = s.length();
@@ -105,7 +107,7 @@ public class T32_longest_valid_parentheses {
   }
 
   /* 2021年5月1日，删光了之前的代码，也不看题解和自己的博客，只靠自己尝试重写这题，成功了 */
-  static class me_20210501 {
+  static class me_dp_20210501 {
 
     public int longestValidParentheses(String s) {
       if (s == null || s.length() < 2) return 0;
@@ -137,6 +139,72 @@ public class T32_longest_valid_parentheses {
       }
       /* 注意 dpMax 还没和 dp[1] 比较过 */
       return Math.max(dpMax, dp[1]);
+    }
+  }
+
+  /** 
+   * 用栈做 
+   * TODO 要记得能自己写出来啊 —— T32 栈
+   **/
+  static class Solution {
+
+    public int longestValidParentheses(String str) {
+      int maxans = 0;
+      Stack<Integer> stack = new Stack<>();
+      stack.push(-1);
+      for (int i = 0; i < str.length(); i++) {
+        if (str.charAt(i) == '(') {
+          /** -> ( */
+          stack.push(i);
+        } else {
+          /** -> ) */
+          /** 则 ( -> */
+          stack.pop();
+          if (stack.empty()) {
+            stack.push(i);
+          } else {
+            maxans = Math.max(maxans, i - stack.peek());
+          }
+        }
+      }
+      return maxans;
+    }
+  }
+
+  /** 
+   * 用 伪双指针 做 
+   * TODO 要记得得能自己做出来啊 —— T32 伪双指针
+   **/
+  class Solution_left_right {
+
+    public int longestValidParentheses(String s) {
+      int left = 0, right = 0, maxlength = 0;
+      for (int i = 0; i < s.length(); i++) {
+        if (s.charAt(i) == '(') {
+          left++;
+        } else {
+          right++;
+        }
+        if (left == right) {
+          maxlength = Math.max(maxlength, 2 * right);
+        } else if (right > left) {
+          left = right = 0;
+        }
+      }
+      left = right = 0;
+      for (int i = s.length() - 1; i >= 0; i--) {
+        if (s.charAt(i) == '(') {
+          left++;
+        } else {
+          right++;
+        }
+        if (left == right) {
+          maxlength = Math.max(maxlength, 2 * left);
+        } else if (left > right) {
+          left = right = 0;
+        }
+      }
+      return maxlength;
     }
   }
 }
