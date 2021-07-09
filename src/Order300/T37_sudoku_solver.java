@@ -24,6 +24,12 @@ public class T37_sudoku_solver {
 
   static class Solution {
 
+    public void solveSudoku(char[][] board) {}
+  }
+
+  /* 第一次尝试 时间 3ms => 86.88% 空间 38.2 => 7.76% */
+  static class Solution_me_1 {
+
     /** 对参数中对res进行修改，则，res的值真的会发生变化
      * Java的方法传递是 值传递
      * 对于基本数据类型，值传递，所以，对形式参数的赋值不会改变实际参数的值
