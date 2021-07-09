@@ -34,6 +34,19 @@ public class T37_sudoku_solver {
     //   return res;
     // }
 
+    List<String> debugPrintBoard(char[][] board) {
+      List<String> out = new ArrayList<>();
+      StringBuilder sb;
+      for (int i = 0; i < 9; i++) {
+        sb = new StringBuilder();
+        for (int j = 0; j < 9; j++) {
+          sb.append(board[i][j]);
+        }
+        out.add(sb.toString());
+      }
+      return out;
+    }
+
     List<Character> mixUp(boolean[] lineX, boolean[] lineY, boolean[] lineS) {
       int iMax = lineX.length;
       List<Character> out = new ArrayList<Character>();
@@ -64,7 +77,12 @@ public class T37_sudoku_solver {
           }
         }
       }
-      for (char x : mixUp(lineX[pi], lineY[pj], lineS[pi / 3 * 3 + pj / 3])) {
+      List<Character> choices = mixUp(
+        lineX[pi],
+        lineY[pj],
+        lineS[pi / 3 * 3 + pj / 3]
+      );
+      for (char x : choices) {
         board[pi][pj] = x;
         lineX[pi][x - '1'] = true;
         lineY[pj][x - '1'] = true;
