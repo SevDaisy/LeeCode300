@@ -46,14 +46,14 @@ public class T37_sudoku_solver {
           }
         }
       }
-      dfs(board, 0, 0);
+      System.out.println(dfs(board, 0, 0));
       /* 打印结果 */
-      for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-          System.out.printf(" %c", board[i][j]);
-        }
-        System.out.println();
-      }
+      // for (int ii = 0; ii < 9; ii++) {
+      // for (int jj = 0; jj < 9; jj++) {
+      // System.out.printf(" %c", board[ii][jj]);
+      // }
+      // System.out.println();
+      // }
     }
 
     /**
@@ -79,6 +79,13 @@ public class T37_sudoku_solver {
       }
       if (x == 9) {
         /* 走到第九行了，说明前0～8行都走完了，成功，退出 */
+        /* 打印结果 */
+        for (int ii = 0; ii < 9; ii++) {
+          for (int jj = 0; jj < 9; jj++) {
+            System.out.printf(" %c", board[ii][jj]);
+          }
+          System.out.println();
+        }
         return true;
       }
       if (board[x][y] != '.') {
