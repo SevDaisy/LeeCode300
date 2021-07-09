@@ -40,6 +40,7 @@ public class T37_sudoku_solver {
       for (int i = 0; i < 9; i++) {
         sb = new StringBuilder();
         for (int j = 0; j < 9; j++) {
+          sb.append(" ");
           sb.append(board[i][j]);
         }
         out.add(sb.toString());
@@ -73,6 +74,13 @@ public class T37_sudoku_solver {
             pj = j;
             break searchNext;
           } else if (i == 8 && j == 8) {
+            /* 打印结果 */
+            // for (int jj = 0; jj < 9; jj++) {
+            // for (int ii = 0; ii < 9; ii++) {
+            // System.out.printf(" %c", board[ii][jj]);
+            // }
+            // System.out.println();
+            // }
             return true;
           }
         }
@@ -83,11 +91,19 @@ public class T37_sudoku_solver {
         lineS[pi / 3 * 3 + pj / 3]
       );
       for (char x : choices) {
+        // char old = board[pi][pj];
         board[pi][pj] = x;
         lineX[pi][x - '1'] = true;
         lineY[pj][x - '1'] = true;
         lineS[pi / 3 * 3 + pj / 3][x - '1'] = true;
-        backtrack(board, lineX, lineY, lineS, pi, pj);
+        if (backtrack(board, lineX, lineY, lineS, pi, pj)) {
+          /* 及时退出 */
+          return true;
+        }
+        /* 复原到上一步 但是由于前文的逻辑限制，所以，此处的 old 必定为 '.' */
+        // board[pi][pj] = old;
+        // System.out.println("old\t" + old);
+        board[pi][pj] = '.';
         lineX[pi][x - '1'] = false;
         lineY[pj][x - '1'] = false;
         lineS[pi / 3 * 3 + pj / 3][x - '1'] = false;
@@ -115,14 +131,13 @@ public class T37_sudoku_solver {
 
       /* 调用回溯函数 */
       backtrack(board, lineX, lineY, lineS, 0, 0);
-
       /* 打印结果 */
-      for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-          System.out.printf(" %c", board[i][j]);
-        }
-        System.out.println();
-      }
+      // for (int i = 0; i < 9; i++) {
+      // for (int j = 0; j < 9; j++) {
+      // System.out.printf(" %c", board[i][j]);
+      // }
+      // System.out.println();
+      // }
     }
   }
 }
