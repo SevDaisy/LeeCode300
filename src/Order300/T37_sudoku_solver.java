@@ -9,13 +9,13 @@ public class T37_sudoku_solver {
     new Solution()
     .solveSudoku(
         new char[][] {
-          { '5', '3', '.', '.', '7', '.', '.', '.', '.' },
-          { '6', '.', '.', '1', '9', '5', '.', '.', '.' },
-          { '.', '9', '8', '.', '.', '.', '.', '6', '.' },
-          { '8', '.', '.', '.', '6', '.', '.', '.', '3' },
-          { '4', '.', '.', '8', '.', '3', '.', '.', '1' },
-          { '7', '.', '.', '.', '2', '.', '.', '.', '6' },
-          { '.', '6', '.', '.', '.', '.', '2', '8', '.' },
+          { '5', '3', '4', '6', '7', '8', '9', '1', '2' },
+          { '6', '7', '2', '1', '9', '5', '3', '4', '8' },
+          { '1', '9', '8', '3', '4', '2', '5', '6', '7' },
+          { '8', '5', '9', '7', '6', '1', '4', '2', '3' },
+          { '4', '2', '6', '8', '5', '3', '7', '9', '1' },
+          { '7', '1', '3', '9', '2', '4', '8', '5', '6' },
+          { '9', '6', '1', '.', '.', '.', '2', '8', '.' },
           { '.', '.', '.', '4', '1', '9', '.', '.', '5' },
           { '.', '.', '.', '.', '8', '.', '.', '7', '9' },
         }
@@ -35,14 +35,14 @@ public class T37_sudoku_solver {
 
     public void solveSudoku(char[][] board) {
       /* 初始化读入 */
-      for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-          if (board[i][j] != '.') {
-            int index = board[i][j] - '1';
+      for (int xi = 0; xi < 9; xi++) {
+        for (int yi = 0; yi < 9; yi++) {
+          if (board[xi][yi] != '.') {
+            int step = board[xi][yi] - '1';
             /* 这三行可以用连等来写成一行，但是我觉得丑、就算了 */
-            row[i][index] = true;
-            col[j][index] = true;
-            cell[i / 3][j / 3][index] = true;
+            row[xi][step] = true;
+            col[yi][step] = true;
+            cell[xi / 3][yi / 3][step] = true;
           }
         }
       }
@@ -100,25 +100,19 @@ public class T37_sudoku_solver {
        * 状态观察/位置矫正 Over
        * 接下来是，认真走一步，要做的业务处理
        */
-      for (int possible = 0; possible < 9; possible++) {
+      for (int step = 0; step < 9; step++) {
         /* 如果这一步可以这样走 */
-        if (
-          !(
-            row[x][possible] || col[y][possible] || cell[x / 3][y / 3][possible]
-          )
-        ) {
+        if (!(row[x][step] || col[y][step] || cell[x / 3][y / 3][step])) {
           /* 那就走这样的一步 */
-          board[x][y] = (char) (possible + '1');
-          row[x][possible] =
-            col[x][possible] = cell[x / 3][y / 3][possible] = true;
+          board[x][y] = (char) (step + '1');
+          row[x][step] = col[x][step] = cell[x / 3][y / 3][step] = true;
           if (dfs(board, x, y + 1)) {
             /* DFS 中的及时退出处理 —— 上游函数栈传递返回 true */
             return true;
           }
           /* 然后把这一步撤回来 */
           board[x][y] = '.';
-          row[x][possible] =
-            col[x][possible] = cell[x / 3][y / 3][possible] = false;
+          row[x][step] = col[x][step] = cell[x / 3][y / 3][step] = false;
         }
       }
       /* 没能在前面的逻辑中return，走到这儿了，那就是失败了，返回 false */
