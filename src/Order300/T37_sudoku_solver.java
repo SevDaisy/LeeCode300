@@ -15,13 +15,13 @@ public class T37_sudoku_solver {
           { '8', '5', '9', '7', '6', '1', '4', '2', '3' },
           { '4', '2', '6', '8', '5', '3', '7', '9', '1' },
           { '7', '1', '3', '9', '2', '4', '8', '5', '6' },
-          { '9', '6', '1', '.', '.', '.', '2', '8', '.' },
+          { '9', '6', '.', '.', '.', '.', '2', '8', '.' },
           { '.', '.', '.', '4', '1', '9', '.', '.', '5' },
           { '.', '.', '.', '.', '8', '.', '.', '7', '9' },
         }
       );
   }
-
+/* 第二次尝试，借鉴他人，优化了代码结构 时间 1ms => 99.96% 空间 35.7MB => 80.16% */
   static class Solution {
 
     /* 学习变量处理 用类变量代替方法传参 */
@@ -46,7 +46,8 @@ public class T37_sudoku_solver {
           }
         }
       }
-      System.out.println(dfs(board, 0, 0));
+      dfs(board, 0, 0);
+      // System.out.println(dfs(board, 0, 0));
       /* 打印结果 */
       // for (int ii = 0; ii < 9; ii++) {
       // for (int jj = 0; jj < 9; jj++) {
@@ -80,12 +81,12 @@ public class T37_sudoku_solver {
       if (x == 9) {
         /* 走到第九行了，说明前0～8行都走完了，成功，退出 */
         /* 打印结果 */
-        for (int ii = 0; ii < 9; ii++) {
-          for (int jj = 0; jj < 9; jj++) {
-            System.out.printf(" %c", board[ii][jj]);
-          }
-          System.out.println();
-        }
+        // for (int ii = 0; ii < 9; ii++) {
+        // for (int jj = 0; jj < 9; jj++) {
+        // System.out.printf(" %c", board[ii][jj]);
+        // }
+        // System.out.println();
+        // }
         return true;
       }
       if (board[x][y] != '.') {
@@ -105,14 +106,14 @@ public class T37_sudoku_solver {
         if (!(row[x][step] || col[y][step] || cell[x / 3][y / 3][step])) {
           /* 那就走这样的一步 */
           board[x][y] = (char) (step + '1');
-          row[x][step] = col[x][step] = cell[x / 3][y / 3][step] = true;
+          row[x][step] = col[y][step] = cell[x / 3][y / 3][step] = true;
           if (dfs(board, x, y + 1)) {
             /* DFS 中的及时退出处理 —— 上游函数栈传递返回 true */
             return true;
           }
           /* 然后把这一步撤回来 */
           board[x][y] = '.';
-          row[x][step] = col[x][step] = cell[x / 3][y / 3][step] = false;
+          row[x][step] = col[y][step] = cell[x / 3][y / 3][step] = false;
         }
       }
       /* 没能在前面的逻辑中return，走到这儿了，那就是失败了，返回 false */
