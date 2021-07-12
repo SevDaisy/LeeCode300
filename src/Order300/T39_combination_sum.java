@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import BaseNode.util;
+
 @SuppressWarnings("unchecked")
 public class T39_combination_sum {
 
@@ -18,8 +20,39 @@ public class T39_combination_sum {
     }
   }
 
-  /* 第二次尝试 借鉴别人的回溯 时间 2ms => 99.96% 空间 38.7MB => 40.03%  */
   static class Solution {
+
+    /* 命名更改为 nums 方便多了 */
+    int[] nums;
+    List<List<Integer>> answers = new ArrayList<List<Integer>>();
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+      this.nums = candidates;
+      /* 排序完全可以省略 Arrays.sort(this.table); */
+      /* 健壮性考虑 */
+      if (candidates == null || candidates.length == 0) return answers;
+      backtrace(target, 0, new ArrayList<Integer>());
+      return answers;
+    }
+
+    private void backtrace(int target, int pos, ArrayList<Integer> path) {
+      if (target == 0) {
+        util.errPrintList(path, "Add Path");
+        answers.add(new ArrayList<Integer>(path));
+      }
+      if (pos == nums.length) return;
+      backtrace(target, pos + 1, path);
+      /* 写到这里才明白，这个 target-nums[pos]>=0 中的 ≥0 实在是精妙绝伦 */
+      if (target - nums[pos] >= 0) {
+        path.add(nums[pos]);
+        backtrace(target - nums[pos], pos, path);
+        path.remove(path.size() - 1);
+      }
+    }
+  }
+
+  /* 第二次尝试 借鉴别人的回溯 时间 2ms => 99.96% 空间 38.7MB => 40.03%  */
+  static class Solution_second {
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
       List<List<Integer>> answers = new ArrayList<>();
@@ -40,6 +73,7 @@ public class T39_combination_sum {
       int i
     ) {
       if (target == 0) {
+        /* 考虑学习，不是用 clone 再强制类型转换，而是利用 ArrayList 的特性支持 */
         answers.add(new ArrayList<Integer>(path));
         return;
       }
