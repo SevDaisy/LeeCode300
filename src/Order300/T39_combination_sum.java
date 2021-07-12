@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import BaseNode.util;
-
 @SuppressWarnings("unchecked")
 public class T39_combination_sum {
 
   public static void main(String[] args) {
-    List<List<Integer>> out = new Solution()
+    List<List<Integer>> out = new Solution_second()
     .combinationSum(new int[] { 2, 3, 6, 7 }, 7);
     for (List<Integer> list : out) {
       for (int x : list) {
@@ -20,6 +18,7 @@ public class T39_combination_sum {
     }
   }
 
+  /* 第三次尝试，改写自己的回溯，时间 2ms => 99.96% 空间 38.8MB => 32.49% */
   static class Solution {
 
     /* 命名更改为 nums 方便多了 */
@@ -37,8 +36,10 @@ public class T39_combination_sum {
 
     private void backtrace(int target, int pos, ArrayList<Integer> path) {
       if (target == 0) {
-        util.errPrintList(path, "Add Path");
+        // BaseNode.util.errPrintList(path, "Add Path");
         answers.add(new ArrayList<Integer>(path));
+        /* 此处 return ，做到了 及时终止、主动退出。防止回溯二次遍历到这个解路径 */
+        return;
       }
       if (pos == nums.length) return;
       backtrace(target, pos + 1, path);
