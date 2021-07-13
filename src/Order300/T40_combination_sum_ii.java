@@ -7,7 +7,7 @@ import java.util.List;
 public class T40_combination_sum_ii {
 
   public static void main(String[] args) {
-    for (List<Integer> list : new Solution()
+    for (List<Integer> list : new Solution_2ms()
     .combinationSum2(new int[] { 10, 1, 2, 7, 6, 1, 5 }, 8)) {
       for (int x : list) {
         System.out.printf(" %d", x);
@@ -15,12 +15,41 @@ public class T40_combination_sum_ii {
       System.out.println();
     }
     System.out.println();
-    for (List<Integer> list : new Solution()
+    for (List<Integer> list : new Solution_2ms()
     .combinationSum2(new int[] { 2, 5, 2, 1, 2 }, 5)) {
       for (int x : list) {
         System.out.printf(" %d", x);
       }
       System.out.println();
+    }
+  }
+
+  static class Solution_2ms {
+
+    List<List<Integer>> list = new ArrayList<>();
+    List<Integer> path = new ArrayList<>();
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+      Arrays.sort(candidates);
+      dfs(candidates, target, 0);
+      return list;
+    }
+
+    private void dfs(int[] candidates, int target, int index) {
+      if (target == 0) {
+        list.add(new ArrayList<>(path));
+        return;
+      }
+      for (int i = index; i < candidates.length; i++) {
+        if (candidates[i] <= target) {
+          if (i > index && candidates[i] == candidates[i - 1]) {
+            continue;
+          }
+          path.add(candidates[i]);
+          dfs(candidates, target - candidates[i], i + 1);
+          path.remove(path.size() - 1);
+        }
+      }
     }
   }
 
