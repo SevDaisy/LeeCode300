@@ -7,7 +7,7 @@ import java.util.List;
 public class T40_combination_sum_ii {
 
   public static void main(String[] args) {
-    for (List<Integer> list : new Solution_2ms()
+    for (List<Integer> list : new Solution()
     .combinationSum2(new int[] { 10, 1, 2, 7, 6, 1, 5 }, 8)) {
       for (int x : list) {
         System.out.printf(" %d", x);
@@ -15,8 +15,8 @@ public class T40_combination_sum_ii {
       System.out.println();
     }
     System.out.println();
-    for (List<Integer> list : new Solution_2ms()
-    .combinationSum2(new int[] { 2, 5, 2, 1, 2 }, 5)) {
+    for (List<Integer> list : new Solution()
+    .combinationSum2(new int[] { 10, 1, 2, 7, 6, 1, 5 }, 8)) {
       for (int x : list) {
         System.out.printf(" %d", x);
       }
@@ -53,6 +53,7 @@ public class T40_combination_sum_ii {
     }
   }
 
+  /* 第二次尝试 改编自 2ms 范程 时间 2ms => 99.94% 空间 38.6% => 64.29% */
   static class Solution {
 
     int[] nums;
@@ -65,16 +66,7 @@ public class T40_combination_sum_ii {
       if (candidates == null || candidates.length == 0) return answers;
       this.nums = candidates;
       Arrays.sort(this.nums);
-      BaseNode.util.errPrintList(
-        new ArrayList<Integer>() {
-          {
-            for (int i = 0; i < nums.length; i++) {
-              add(nums[i]);
-            }
-          }
-        },
-        "nums"
-      );
+      // BaseNode.util.errPrintList(new ArrayList<Integer>() {{for (int i = 0; i < nums.length; i++) {add(nums[i]);}}},"nums");
       backtrace(target, 0);
       return answers;
     }
@@ -87,9 +79,10 @@ public class T40_combination_sum_ii {
 
       for (int i = pos; i < nums.length; i++) {
         if (nums[i] <= target) {
+          /* 对于多次访问到的重复元素进行跳过 */
           if (i > pos && nums[i] == nums[i - 1]) continue;
           path.add(nums[i]);
-          backtrace(target - nums[i], pos + 1);
+          backtrace(target - nums[i], i + 1);/* 注意！此处应为 i+1 而非 pos+1 */
           path.remove(path.size() - 1);
         }
       }
