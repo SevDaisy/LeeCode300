@@ -24,8 +24,51 @@ public class T40_combination_sum_ii {
     }
   }
 
-  /* 第一次尝试 频率表 + 回溯 时间 4ms => 54.52% 空间 38.7MB => 39.91% */
   static class Solution {
+
+    int[] nums;
+    List<List<Integer>> answers = new ArrayList<List<Integer>>();
+    /* path只有尾部操作，所以，其实完全可以用 Deque 来做 */
+    ArrayList<Integer> path = new ArrayList<Integer>();
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+      /* 健壮性考虑 */
+      if (candidates == null || candidates.length == 0) return answers;
+      this.nums = candidates;
+      Arrays.sort(this.nums);
+      BaseNode.util.errPrintList(
+        new ArrayList<Integer>() {
+          {
+            for (int i = 0; i < nums.length; i++) {
+              add(nums[i]);
+            }
+          }
+        },
+        "nums"
+      );
+      backtrace(target, 0);
+      return answers;
+    }
+
+    private void backtrace(int target, int pos) {
+      if (target == 0) {
+        answers.add(new ArrayList<Integer>(path));
+        return;
+      }
+
+      for (int i = pos; i < nums.length; i++) {
+        if (nums[i] <= target) {
+          if (i > pos && nums[i] == nums[i - 1]) continue;
+          path.add(nums[i]);
+          backtrace(target - nums[i], pos + 1);
+          path.remove(path.size() - 1);
+        }
+      }
+    }
+  }
+
+  /* 第一次尝试 频率表 + 回溯 时间 4ms => 54.52% 空间 38.7MB => 39.91% */
+  static class Solution_first {
 
     /* 用一个 int[2] 代替 元组（x,y） */
     List<int[]> numList = new ArrayList<int[]>();
