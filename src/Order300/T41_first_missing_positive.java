@@ -3,6 +3,7 @@ package Order300;
 public class T41_first_missing_positive {
 
   public static void main(String[] args) {
+    System.out.println(new Solution().firstMissingPositive(new int[] { 1, 1 })); // -> 2
     System.out.println(
       new Solution().firstMissingPositive(new int[] { 1, 2, 0 })
     ); // -> 3
@@ -43,12 +44,15 @@ public class T41_first_missing_positive {
      * 也就是说，数组中的元素，合法的范围不是 x > 0 而是 x in [1,iMax]
      *
      * 关于数字的比较和交换。
-     * 应该是, if nums[nums[i]-1] != nums[i] 则 交换. |=> 也就是 nums[i]-1 != i 也就是 nums[i] != i+1
+     * 应该是, if nums[nums[i]-1] != nums[i] 则 交换. 
      * 而不是, if nums[i] != i+1 则 buffer = nums[nums[i]-1]; nums[nums[i]-1] = nums[i];
      * 也就说, 不能拿着这个数，去保存到另外的 buffer。这样的代码远不如直接交换来得简明健壮好用好看。
      * 具体逻辑我也说不清楚。我只知道，一开始想用 buffer 写来着，我没写出来。
      * 品，细品。悟，好好悟。想明白了可以教教我🤪
      *
+     * 
+     * 补充说明 下面这个简化是不成立的："nums[nums[i]-1] != nums[i] 转化为 nums[i]-1 != i 转化为 nums[i] != i+1"
+     * 因为，(nums[nums[i]-1] != nums[i]) 是 (nums[i]-1 != i) 的 充分但不必要条件
      */
     public int firstMissingPositive(int[] nums) {
       // if (nums == null || nums.length == 0) return 0;
