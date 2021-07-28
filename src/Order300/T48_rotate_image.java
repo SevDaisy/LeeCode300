@@ -83,8 +83,22 @@ public class T48_rotate_image {
     }
   }
 
+  /* 第一次尝试 迭代 时间 0ms => 100% 空间 38.5MB => 62% */
   static class Solution {
 
-    public void rotate(int[][] matrix) {}
+    public void rotate(int[][] matrix) {
+      int iMax = matrix.length - 1; // i in [0,iMax]
+      /* Lv 即是从外圈往内圈数的第 Lv 层 */
+      for (int Lv = 0; Lv < matrix.length / 2; Lv++) {
+        int forSize = iMax - (Lv << 1);
+        for (int i = 0; i < forSize; i++) {
+          int buffer = matrix[Lv + i][Lv];
+          matrix[Lv + i][Lv] = matrix[iMax - Lv][Lv + i];
+          matrix[iMax - Lv][Lv + i] = matrix[iMax - i - Lv][iMax - Lv];
+          matrix[iMax - i - Lv][iMax - Lv] = matrix[Lv][iMax - i - Lv];
+          matrix[Lv][iMax - i - Lv] = buffer;
+        }
+      }
+    }
   }
 }
