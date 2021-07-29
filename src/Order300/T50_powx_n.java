@@ -28,7 +28,7 @@ public class T50_powx_n {
   }
 
   /* 第一次尝试 递归 时间 0ms => 100% 空间 36.6MB => 78.12%  */
-  static class Solution {
+  static class Solution_Rec {
 
     public double myPow(double x, int n) {
       /* 提前出口 */
@@ -36,16 +36,48 @@ public class T50_powx_n {
       if (x == 1) return 1;
       if (x == 0) return 0;
 
+      /* 子函数的 n 需要映射为【N：long】，是因为在 【n：-2147483648】情况，参数【int】是无法正常接收【-n】的值的 */
+      long N = n;
       /* 模式过滤 */
-      return n > 0 ? quickRec(x, n) : 1 / quickRec(x, -n);
+      return n > 0 ? quickRec(x, N) : 1 / quickRec(x, -N);
     }
 
     /* 递归求值 */
-    private double quickRec(double x, int n) {
-      if (n == 0) return 1.0;
+    private double quickRec(double x, long N) {
+      if (N == 0) return 1.0;
       /* 使用 buffer 比在 return 里运算子结果要快很多 */
-      double buffer = quickRec(x, n / 2);/* BugFix：这里要调用的是 quiceRec 而不是 myPow，不要写错了！ */
-      return (n % 2 == 0 ? buffer * buffer : x * buffer * buffer);
+      /* BugFix：这里要调用的是 quiceRec 而不是 myPow，不要写错了！ */
+      double buffer = quickRec(x, N / 2);
+      return (N % 2 == 0 ? buffer * buffer : x * buffer * buffer);
+    }
+  }
+
+  /* 第二次尝试 迭代 时间 1ms => 84.34% 空间 37.4MB => 64.59% */
+  static class Solution {
+
+    public double myPow(double x, int n) {
+      /* 提前出口 */
+      if (n == 0) return x == 0 ? 0 : 1;
+      if (x == 1) return 1;
+      if (x == 0) return 0;
+      long N = n;
+      /* 模式过滤 */
+      return n > 0 ? quickRec(x, N) : 1 / quickRec(x, -N);
+    }
+
+    /* 迭代求值 */
+    private double quickRec(double x, Long N) {
+      double ans = 1.0;
+      double power = x;
+      /**
+       * 下面这个 while 循环很精妙，我写不出来
+       */
+      while (N > 0) {
+        if ((N & 1) == 1) ans *= power;
+        power *= power;
+        N >>= 1;
+      }
+      return ans;
     }
   }
 }
