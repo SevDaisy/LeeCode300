@@ -16,6 +16,10 @@ public class T49_group_anagrams {
      * 用 Map<String,List<String>> 做映射
      * String 用 sort 后的字符串
      * 缺点：对每个字符串进行解构然后排序，然后还要用Map。在时间上和空间上都比较奢侈。不够精妙。
+     * 
+     * 仰仗 Java STL 本身的性能，最后在时间上击败 98.50% 还是很喜人的。
+     * 不过空间上落后于人 —— 21.72% 到确实有点出乎我医疗。我只是额外申请了一个 O(n) 的 Map 作为辅助空间。
+     * 去看看别人的写法。
      */
     public List<List<String>> groupAnagrams(String[] strs) {
       Map<String, List<String>> table = new HashMap<String, List<String>>();
