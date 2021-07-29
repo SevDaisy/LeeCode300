@@ -27,7 +27,7 @@ public class T50_powx_n {
     System.out.println(s.myPow(2, Integer.MIN_VALUE));
   }
 
-  /* 第一次尝试 递归 失败【对于（2，Integer.MIN_VALUE）的情况，值溢出 】 */
+  /* 第一次尝试 递归 时间 0ms => 100% 空间 36.6MB => 78.12%  */
   static class Solution {
 
     public double myPow(double x, int n) {
@@ -44,7 +44,7 @@ public class T50_powx_n {
     private double quickRec(double x, int n) {
       if (n == 0) return 1.0;
       /* 使用 buffer 比在 return 里运算子结果要快很多 */
-      double buffer = myPow(x, n / 2);
+      double buffer = quickRec(x, n / 2);/* BugFix：这里要调用的是 quiceRec 而不是 myPow，不要写错了！ */
       return (n % 2 == 0 ? buffer * buffer : x * buffer * buffer);
     }
   }
