@@ -7,30 +7,36 @@ package Order300;
 public class T50_powx_n {
 
   public static void main(String[] args) {
-    Solution s = new Solution();
-    System.out.println(s.myPow(0, 0));
-    System.out.println(s.myPow(0, 9));
-    System.out.println(s.myPow(0, -9));
-    System.out.println();
-    System.out.println(s.myPow(1, 0));
-    System.out.println(s.myPow(1, 9));
-    System.out.println(s.myPow(1, -9));
-    System.out.println();
-    System.out.println(s.myPow(-1, 0));
-    System.out.println(s.myPow(-1, 9));
-    System.out.println(s.myPow(-1, -9));
-    System.out.println();
-    System.out.println(s.myPow(2, 3));
-    System.out.println(s.myPow(2, -3));
-    System.out.println();
-    System.out.println(s.myPow(0.00001, Integer.MAX_VALUE));
-    System.out.println(s.myPow(2, Integer.MIN_VALUE));
+    Solution_Rec s = new Solution_Rec();
+    // System.out.println(s.myPow(0, 0));
+    // System.out.println(s.myPow(0, 9));
+    // System.out.println(s.myPow(0, -9));
+    // System.out.println();
+    // System.out.println(s.myPow(1, 0));
+    // System.out.println(s.myPow(1, 9));
+    // System.out.println(s.myPow(1, -9));
+    // System.out.println();
+    // System.out.println(s.myPow(-1, 0));
+    // System.out.println(s.myPow(-1, 9));
+    // System.out.println(s.myPow(-1, -9));
+    // System.out.println();
+    // System.out.println(s.myPow(2, 3));
+    // System.out.println(s.myPow(2, -3));
+    // System.out.println();
+    // System.out.println(s.myPow(0.00001, Integer.MAX_VALUE));
+    System.out.println(s.myPow(2, 32));
+    System.out.println(Solution_Rec.cnt);
+    System.out.println(s.myPow(2, 64));
+    System.out.println(Solution_Rec.cnt);
   }
 
   /* 第一次尝试 递归 时间 0ms => 100% 空间 36.6MB => 78.12%  */
   static class Solution_Rec {
 
+    static long cnt = 0;
+
     public double myPow(double x, int n) {
+      Solution_Rec.cnt = 0;
       /* 提前出口 */
       if (n == 0) return x == 0 ? 0 : 1;
       if (x == 1) return 1;
@@ -47,6 +53,7 @@ public class T50_powx_n {
       if (N == 0) return 1.0;
       /* 使用 buffer 比在 return 里运算子结果要快很多 */
       /* BugFix：这里要调用的是 quiceRec 而不是 myPow，不要写错了！ */
+      cnt++;
       double buffer = quickRec(x, N / 2);
       return (N % 2 == 0 ? buffer * buffer : x * buffer * buffer);
     }
