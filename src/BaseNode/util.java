@@ -30,8 +30,20 @@ public abstract class util {
     T list,
     String name
   ) {
+    errPrintList(list, name, " ");
+  }
+
+  /**
+   * 打印 可遍历 的对象
+   * @param split 遍历对象间的分割元素
+   */
+  public static <E, T extends Iterable<E>> void errPrintList(
+    T list,
+    String name,
+    String split
+  ) {
     System.err.print(name + ":");
-    for (E x : list) System.err.print(" " + x);
-    System.err.println();
+    for (E x : list) System.err.print(split + x);
+    System.out.println();
   }
 }
